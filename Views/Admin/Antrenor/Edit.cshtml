@@ -1,0 +1,71 @@
+@model Antrenor
+@{
+    ViewData["Title"] = "Antrenör Düzenle";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="OlusturmaTarihi" />
+            
+            <div class="mb-3">
+                <label asp-for="Ad" class="form-label"></label>
+                <input asp-for="Ad" class="form-control" />
+                <span asp-validation-for="Ad" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Soyad" class="form-label"></label>
+                <input asp-for="Soyad" class="form-control" />
+                <span asp-validation-for="Soyad" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control" type="email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Telefon" class="form-label"></label>
+                <input asp-for="Telefon" class="form-control" />
+                <span asp-validation-for="Telefon" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="SporSalonuId" class="form-label">Spor Salonu</label>
+                <select asp-for="SporSalonuId" class="form-select" asp-items="ViewBag.SporSalonuId">
+                    <option value="">-- Spor Salonu Seçin --</option>
+                </select>
+                <span asp-validation-for="SporSalonuId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="UzmanlikAlanlari" class="form-label">Uzmanlık Alanları</label>
+                <input asp-for="UzmanlikAlanlari" class="form-control" placeholder="Örn: Kas geliştirme, Kilo verme, Yoga" />
+                <span asp-validation-for="UzmanlikAlanlari" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Aciklama" class="form-label"></label>
+                <textarea asp-for="Aciklama" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Aciklama" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+                <a asp-action="Index" class="btn btn-secondary">İptal</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

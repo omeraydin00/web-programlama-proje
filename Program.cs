@@ -29,6 +29,9 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
 
+// RoleManager servisini ekle
+builder.Services.AddScoped<RoleManager<IdentityRole>>();
+
 // Cookie yapılandırması
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -58,6 +61,13 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+// Veritabanını başlat
+using (var scope = app.Services.CreateScope())
+{
+    await DbInitializer.InitializeAsync(scope.ServiceProvider);
+}
+
 app.Run();
+
 
 

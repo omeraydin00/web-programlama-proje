@@ -1,0 +1,26 @@
+@model SporSalonu
+@{
+    ViewData["Title"] = "Spor Salonu Sil";
+}
+
+<h2>@ViewData["Title"]</h2>
+<h3 class="text-danger">Bu spor salonunu silmek istediğinizden emin misiniz?</h3>
+<hr />
+
+<dl class="row">
+    <dt class="col-sm-3">Ad:</dt>
+    <dd class="col-sm-9">@Model.Ad</dd>
+
+    <dt class="col-sm-3">Adres:</dt>
+    <dd class="col-sm-9">@(Model.Adres ?? "-")</dd>
+
+    <dt class="col-sm-3">Telefon:</dt>
+    <dd class="col-sm-9">@(Model.Telefon ?? "-")</dd>
+</dl>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Sil</button>
+    <a asp-action="Index" class="btn btn-secondary">İptal</a>
+</form>
+

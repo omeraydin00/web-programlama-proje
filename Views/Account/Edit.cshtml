@@ -1,0 +1,61 @@
+@model EditUserViewModel
+@{
+    ViewData["Title"] = "Bilgileri Düzenle";
+}
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <h2>@ViewData["Title"]</h2>
+        <hr />
+
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="Ad" class="form-label"></label>
+                <input asp-for="Ad" class="form-control" />
+                <span asp-validation-for="Ad" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Soyad" class="form-label"></label>
+                <input asp-for="Soyad" class="form-control" />
+                <span asp-validation-for="Soyad" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label"></label>
+                <input asp-for="Email" class="form-control" readonly />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Telefon" class="form-label"></label>
+                <input asp-for="Telefon" class="form-control" />
+                <span asp-validation-for="Telefon" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="DogumTarihi" class="form-label"></label>
+                <input asp-for="DogumTarihi" class="form-control" type="date" />
+                <span asp-validation-for="DogumTarihi" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Adres" class="form-label"></label>
+                <textarea asp-for="Adres" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Adres" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+                <a asp-action="Index" class="btn btn-secondary">İptal</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

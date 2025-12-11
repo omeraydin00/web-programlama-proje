@@ -1,0 +1,66 @@
+@model Antrenor
+@{
+    ViewData["Title"] = "Antrenör Detayları";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+
+<dl class="row">
+    <dt class="col-sm-3">Ad Soyad:</dt>
+    <dd class="col-sm-9">@Model.Ad @Model.Soyad</dd>
+
+    <dt class="col-sm-3">Email:</dt>
+    <dd class="col-sm-9">@(Model.Email ?? "-")</dd>
+
+    <dt class="col-sm-3">Telefon:</dt>
+    <dd class="col-sm-9">@(Model.Telefon ?? "-")</dd>
+
+    <dt class="col-sm-3">Spor Salonu:</dt>
+    <dd class="col-sm-9">@(Model.SporSalonu?.Ad ?? "-")</dd>
+
+    <dt class="col-sm-3">Uzmanlık Alanları:</dt>
+    <dd class="col-sm-9">@(Model.UzmanlikAlanlari ?? "-")</dd>
+
+    <dt class="col-sm-3">Açıklama:</dt>
+    <dd class="col-sm-9">@(Model.Aciklama ?? "-")</dd>
+
+    <dt class="col-sm-3">Oluşturma Tarihi:</dt>
+    <dd class="col-sm-9">@Model.OlusturmaTarihi.ToString("dd.MM.yyyy HH:mm")</dd>
+</dl>
+
+<h4 class="mt-4">Müsaitlik Saatleri</h4>
+@if (Model.Müsaitlikler != null && Model.Müsaitlikler.Any())
+{
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th>Gün</th>
+                <th>Başlangıç</th>
+                <th>Bitiş</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var musaitlik in Model.Müsaitlikler.OrderBy(m => m.HaftaninGunu))
+            {
+                <tr>
+                    <td>@musaitlik.HaftaninGunu</td>
+                    <td>@musaitlik.BaslangicSaati.ToString(@"hh\:mm")</td>
+                    <td>@musaitlik.BitisSaati.ToString(@"hh\:mm")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p class="text-muted">Henüz müsaitlik saati tanımlanmamış.</p>
+}
+
+<h4 class="mt-4">Randevular (@(Model.Randevular?.Count ?? 0))</h4>
+
+<div class="mt-3">
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Düzenle</a>
+    <a asp-action="Index" class="btn btn-secondary">Geri Dön</a>
+</div>
+

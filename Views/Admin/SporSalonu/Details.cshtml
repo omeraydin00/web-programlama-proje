@@ -1,0 +1,93 @@
+@model SporSalonu
+@{
+    ViewData["Title"] = "Spor Salonu Detayları";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+
+<dl class="row">
+    <dt class="col-sm-3">Ad:</dt>
+    <dd class="col-sm-9">@Model.Ad</dd>
+
+    <dt class="col-sm-3">Adres:</dt>
+    <dd class="col-sm-9">@(Model.Adres ?? "-")</dd>
+
+    <dt class="col-sm-3">Telefon:</dt>
+    <dd class="col-sm-9">@(Model.Telefon ?? "-")</dd>
+
+    <dt class="col-sm-3">Email:</dt>
+    <dd class="col-sm-9">@(Model.Email ?? "-")</dd>
+
+    <dt class="col-sm-3">Çalışma Saatleri:</dt>
+    <dd class="col-sm-9">@Model.AcilisSaati.ToString(@"hh\:mm") - @Model.KapanisSaati.ToString(@"hh\:mm")</dd>
+
+    <dt class="col-sm-3">Oluşturma Tarihi:</dt>
+    <dd class="col-sm-9">@Model.OlusturmaTarihi.ToString("dd.MM.yyyy HH:mm")</dd>
+</dl>
+
+<h4 class="mt-4">Hizmetler</h4>
+@if (Model.Hizmetler != null && Model.Hizmetler.Any())
+{
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th>Ad</th>
+                <th>Tür</th>
+                <th>Süre (dk)</th>
+                <th>Ücret</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var hizmet in Model.Hizmetler)
+            {
+                <tr>
+                    <td>@hizmet.Ad</td>
+                    <td>@(hizmet.HizmetTuru ?? "-")</td>
+                    <td>@hizmet.Sure</td>
+                    <td>@hizmet.Ucret.ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p class="text-muted">Henüz hizmet eklenmemiş.</p>
+}
+
+<h4 class="mt-4">Antrenörler</h4>
+@if (Model.Antrenorler != null && Model.Antrenorler.Any())
+{
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th>Ad Soyad</th>
+                <th>Email</th>
+                <th>Telefon</th>
+                <th>Uzmanlık Alanları</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var antrenor in Model.Antrenorler)
+            {
+                <tr>
+                    <td>@antrenor.Ad @antrenor.Soyad</td>
+                    <td>@(antrenor.Email ?? "-")</td>
+                    <td>@(antrenor.Telefon ?? "-")</td>
+                    <td>@(antrenor.UzmanlikAlanlari ?? "-")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p class="text-muted">Henüz antrenör eklenmemiş.</p>
+}
+
+<div class="mt-3">
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Düzenle</a>
+    <a asp-action="Index" class="btn btn-secondary">Geri Dön</a>
+</div>
+
