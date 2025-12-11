@@ -20,3 +20,4 @@ public class Antrenor
     public virtual ICollection<AntrenorMüsaitlik> Müsaitlikler { get; set; } = new List<AntrenorMüsaitlik>();
 }
 
+

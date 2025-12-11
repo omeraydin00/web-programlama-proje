@@ -16,3 +16,4 @@ public class SporSalonu
     public virtual ICollection<Antrenor> Antrenorler { get; set; } = new List<Antrenor>();
 }
 
+

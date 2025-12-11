@@ -18,3 +18,4 @@ public class Hizmet
     public virtual ICollection<Randevu> Randevular { get; set; } = new List<Randevu>();
 }
 
+

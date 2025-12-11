@@ -22,3 +22,4 @@ public class Randevu
     public virtual Hizmet? Hizmet { get; set; }
 }
 
+

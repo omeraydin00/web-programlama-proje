@@ -14,3 +14,4 @@ public class AntrenorMüsaitlik
     public virtual Antrenor? Antrenor { get; set; }
 }
 
+

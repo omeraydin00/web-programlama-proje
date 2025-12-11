@@ -14,3 +14,4 @@ public class ApplicationUser : IdentityUser
     public virtual ICollection<Randevu> Randevular { get; set; } = new List<Randevu>();
 }
 
+
