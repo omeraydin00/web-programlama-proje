@@ -1,0 +1,59 @@
+@model Randevu
+@{
+    ViewData["Title"] = "Yeni Randevu Al";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="mb-3">
+                <label asp-for="HizmetId" class="form-label">Hizmet</label>
+                <select asp-for="HizmetId" class="form-select" asp-items="ViewBag.HizmetId" id="hizmetSelect">
+                    <option value="">-- Hizmet Seçin --</option>
+                </select>
+                <span asp-validation-for="HizmetId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="AntrenorId" class="form-label">Antrenör</label>
+                <select asp-for="AntrenorId" class="form-select" asp-items="ViewBag.AntrenorId" id="antrenorSelect">
+                    <option value="">-- Antrenör Seçin --</option>
+                </select>
+                <span asp-validation-for="AntrenorId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="RandevuTarihi" class="form-label">Randevu Tarihi</label>
+                <input asp-for="RandevuTarihi" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="RandevuTarihi" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="BaslangicSaati" class="form-label">Başlangıç Saati</label>
+                <input asp-for="BaslangicSaati" class="form-control" type="time" />
+                <span asp-validation-for="BaslangicSaati" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Notlar" class="form-label">Notlar</label>
+                <textarea asp-for="Notlar" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Notlar" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Randevu Al</button>
+                <a asp-action="Index" class="btn btn-secondary">İptal</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

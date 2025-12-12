@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SporSalonuYonetim.Data;
 using SporSalonuYonetim.Models;
+using SporSalonuYonetim.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,6 +41,10 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = "/Account/AccessDenied";
 });
 
+// OpenAI Service
+builder.Services.AddHttpClient<OpenAIService>();
+builder.Services.AddScoped<OpenAIService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -57,6 +62,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapControllers(); // API controller'ları için
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

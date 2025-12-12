@@ -28,9 +28,11 @@
                                     Admin
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="adminDropdown">
-                                    <li><a class="dropdown-item" asp-controller="Admin/SporSalonu" asp-action="Index">Spor Salonları</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Admin/Antrenor" asp-action="Index">Antrenörler</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Admin/Hizmet" asp-action="Index">Hizmetler</a></li>
+                                    <li><a class="dropdown-item" asp-controller="SporSalonu" asp-action="Index">Spor Salonları</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Antrenor" asp-action="Index">Antrenörler</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Hizmet" asp-action="Index">Hizmetler</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" asp-controller="RandevuYonetim" asp-action="Index">Randevu Yönetimi</a></li>
                                 </ul>
                             </li>
                         }
@@ -38,6 +40,9 @@
                         {
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Randevu" asp-action="Index">Randevularım</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="AIEgzersiz" asp-action="Index">AI Egzersiz Önerileri</a>
                             </li>
                         }
                     </ul>

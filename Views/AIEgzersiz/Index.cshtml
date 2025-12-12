@@ -1,0 +1,81 @@
+@model EgzersizOnerisiViewModel
+@{
+    ViewData["Title"] = "AI Egzersiz Önerileri";
+}
+
+<h2>@ViewData["Title"]</h2>
+<p class="lead">Yapay zeka ile size özel egzersiz programı önerileri alın.</p>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="GetRecommendation" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="VucutTipi" class="form-label"></label>
+                <select asp-for="VucutTipi" class="form-select">
+                    <option value="">-- Seçiniz --</option>
+                    <option value="Ektomorf">Ektomorf (İnce yapılı)</option>
+                    <option value="Mezomorf">Mezomorf (Atletik yapılı)</option>
+                    <option value="Endomorf">Endomorf (Yuvarlak yapılı)</option>
+                </select>
+                <span asp-validation-for="VucutTipi" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Boy" class="form-label"></label>
+                <input asp-for="Boy" class="form-control" type="number" step="0.1" placeholder="Örn: 175" />
+                <span asp-validation-for="Boy" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Kilo" class="form-label"></label>
+                <input asp-for="Kilo" class="form-control" type="number" step="0.1" placeholder="Örn: 70" />
+                <span asp-validation-for="Kilo" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Hedef" class="form-label"></label>
+                <textarea asp-for="Hedef" class="form-control" rows="3" placeholder="Örn: Kilo vermek, kas geliştirmek, genel sağlık"></textarea>
+                <span asp-validation-for="Hedef" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">Öneri Al</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-6">
+        @if (ViewBag.Recommendation != null)
+        {
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">AI Önerisi</h5>
+                </div>
+                <div class="card-body">
+                    <div class="whitespace-pre-line">@ViewBag.Recommendation</div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                <h5>Nasıl Çalışır?</h5>
+                <p>Yapay zeka, girdiğiniz bilgilere göre size özel bir egzersiz programı önerir. Vücut tipi, boy, kilo ve hedeflerinize göre kişiselleştirilmiş öneriler alırsınız.</p>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .whitespace-pre-line {
+        white-space: pre-line;
+    }
+</style>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

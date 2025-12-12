@@ -1,0 +1,29 @@
+@model Hizmet
+@{
+    ViewData["Title"] = "Hizmet Sil";
+}
+
+<h2>@ViewData["Title"]</h2>
+<h3 class="text-danger">Bu hizmeti silmek istediğinizden emin misiniz?</h3>
+<hr />
+
+<dl class="row">
+    <dt class="col-sm-3">Ad:</dt>
+    <dd class="col-sm-9">@Model.Ad</dd>
+
+    <dt class="col-sm-3">Hizmet Türü:</dt>
+    <dd class="col-sm-9">@(Model.HizmetTuru ?? "-")</dd>
+
+    <dt class="col-sm-3">Ücret:</dt>
+    <dd class="col-sm-9">@Model.Ucret.ToString("C")</dd>
+
+    <dt class="col-sm-3">Spor Salonu:</dt>
+    <dd class="col-sm-9">@(Model.SporSalonu?.Ad ?? "-")</dd>
+</dl>
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Sil</button>
+    <a asp-action="Index" class="btn btn-secondary">İptal</a>
+</form>
+

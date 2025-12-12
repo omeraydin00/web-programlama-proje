@@ -1,0 +1,61 @@
+@model Randevu
+@{
+    ViewData["Title"] = "Randevu Detayları";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+
+<dl class="row">
+    <dt class="col-sm-3">Tarih:</dt>
+    <dd class="col-sm-9">@Model.RandevuTarihi.ToString("dd.MM.yyyy")</dd>
+
+    <dt class="col-sm-3">Saat:</dt>
+    <dd class="col-sm-9">@Model.BaslangicSaati.ToString(@"hh\:mm") - @Model.BitisSaati.ToString(@"hh\:mm")</dd>
+
+    <dt class="col-sm-3">Antrenör:</dt>
+    <dd class="col-sm-9">@(Model.Antrenor?.Ad ?? "-") @(Model.Antrenor?.Soyad ?? "")</dd>
+
+    <dt class="col-sm-3">Hizmet:</dt>
+    <dd class="col-sm-9">@(Model.Hizmet?.Ad ?? "-")</dd>
+
+    <dt class="col-sm-3">Ücret:</dt>
+    <dd class="col-sm-9">@Model.ToplamUcret.ToString("C")</dd>
+
+    <dt class="col-sm-3">Durum:</dt>
+    <dd class="col-sm-9">
+        @if (Model.Durum == "Onaylandı")
+        {
+            <span class="badge bg-success">@Model.Durum</span>
+        }
+        else if (Model.Durum == "Beklemede")
+        {
+            <span class="badge bg-warning">@Model.Durum</span>
+        }
+        else if (Model.Durum == "İptal")
+        {
+            <span class="badge bg-danger">@Model.Durum</span>
+        }
+        else
+        {
+            <span class="badge bg-info">@Model.Durum</span>
+        }
+    </dd>
+
+    <dt class="col-sm-3">Notlar:</dt>
+    <dd class="col-sm-9">@(Model.Notlar ?? "-")</dd>
+
+    <dt class="col-sm-3">Oluşturma Tarihi:</dt>
+    <dd class="col-sm-9">@Model.OlusturmaTarihi.ToString("dd.MM.yyyy HH:mm")</dd>
+</dl>
+
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-secondary">Geri Dön</a>
+    @if (Model.Durum != "İptal" && Model.Durum != "Tamamlandı")
+    {
+        <form asp-action="Cancel" asp-route-id="@Model.Id" method="post" class="d-inline">
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Randevuyu iptal etmek istediğinizden emin misiniz?')">İptal Et</button>
+        </form>
+    }
+</div>
+
