@@ -39,3 +39,5 @@ public class RegisterViewModel
     public DateTime? DogumTarihi { get; set; }
 }
 
+
+
