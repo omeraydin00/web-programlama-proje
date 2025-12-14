@@ -28,29 +28,46 @@ public class RandevuController : Controller
     // GET: Randevu
     public async Task<IActionResult> Index()
     {
-        var user = await _userManager.GetUserAsync(User);
-        if (user == null)
+        try
         {
-            return NotFound();
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var randevular = await _context.Randevular
+                .Include(r => r.Antrenor)
+                .Include(r => r.Hizmet)
+                .Where(r => r.UyeId == user.Id)
+                .OrderByDescending(r => r.RandevuTarihi)
+                .ThenByDescending(r => r.BaslangicSaati)
+                .ToListAsync();
+
+            return View(randevular);
         }
-
-        var randevular = await _context.Randevular
-            .Include(r => r.Antrenor)
-            .Include(r => r.Hizmet)
-            .Include(r => r.Uye)
-            .Where(r => r.UyeId == user.Id)
-            .OrderByDescending(r => r.RandevuTarihi)
-            .ThenByDescending(r => r.BaslangicSaati)
-            .ToListAsync();
-
-        return View(randevular);
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Randevular listelenirken hata oluştu: {ErrorMessage}", ex.Message);
+            return View(new List<Randevu>());
+        }
     }
 
     // GET: Randevu/Create
-    public async Task<IActionResult> Create()
+    public async Task<IActionResult> Create(int? antrenorId = null)
     {
-        ViewData["AntrenorId"] = new SelectList(_context.Antrenorler, "Id", "Ad");
+        var antrenorler = await _context.Antrenorler
+            .Select(a => new { a.Id, Ad = a.Ad + " " + a.Soyad })
+            .ToListAsync();
+        
+        ViewData["AntrenorId"] = new SelectList(antrenorler, "Id", "Ad", antrenorId);
         ViewData["HizmetId"] = new SelectList(_context.Hizmetler, "Id", "Ad");
+        
+        if (antrenorId.HasValue)
+        {
+            ViewBag.SelectedAntrenorId = antrenorId.Value;
+        }
+        
         return View();
     }
 
@@ -207,4 +224,5 @@ public class RandevuController : Controller
         return RedirectToAction(nameof(Index));
     }
 }
+
 

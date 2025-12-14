@@ -26,6 +26,15 @@
                 </select>
                 <span asp-validation-for="AntrenorId" class="text-danger"></span>
             </div>
+            
+            @if (ViewBag.SelectedAntrenorId != null)
+            {
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        document.getElementById('antrenorSelect').value = '@ViewBag.SelectedAntrenorId';
+                    });
+                </script>
+            }
 
             <div class="mb-3">
                 <label asp-for="RandevuTarihi" class="form-label">Randevu Tarihi</label>
@@ -56,4 +65,5 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
 

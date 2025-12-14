@@ -22,10 +22,18 @@ public class AntrenorController : Controller
     // GET: Admin/Antrenor
     public async Task<IActionResult> Index()
     {
-        var antrenorler = await _context.Antrenorler
-            .Include(a => a.SporSalonu)
-            .ToListAsync();
-        return View(antrenorler);
+        try
+        {
+            var antrenorler = await _context.Antrenorler
+                .Include(a => a.SporSalonu)
+                .ToListAsync();
+            return View("~/Views/Admin/Antrenor/Index.cshtml", antrenorler);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Antrenörler listelenirken hata oluştu: {ErrorMessage}", ex.Message);
+            return View("~/Views/Admin/Antrenor/Index.cshtml", new List<Antrenor>());
+        }
     }
 
     // GET: Admin/Antrenor/Details/5
@@ -166,6 +174,7 @@ public class AntrenorController : Controller
         return _context.Antrenorler.Any(e => e.Id == id);
     }
 }
+
 
 
 

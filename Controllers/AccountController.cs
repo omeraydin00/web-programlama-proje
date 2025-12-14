@@ -132,9 +132,9 @@ public class AccountController : Controller
 
         var model = new EditUserViewModel
         {
-            Ad = user.Ad,
-            Soyad = user.Soyad,
-            Email = user.Email,
+            Ad = user.Ad ?? string.Empty,
+            Soyad = user.Soyad ?? string.Empty,
+            Email = user.Email ?? string.Empty,
             Telefon = user.Telefon,
             DogumTarihi = user.DogumTarihi,
             Adres = user.Adres
@@ -156,8 +156,8 @@ public class AccountController : Controller
                 return NotFound();
             }
 
-            user.Ad = model.Ad;
-            user.Soyad = model.Soyad;
+            user.Ad = model.Ad ?? string.Empty;
+            user.Soyad = model.Soyad ?? string.Empty;
             user.Telefon = model.Telefon;
             user.DogumTarihi = model.DogumTarihi;
             user.Adres = model.Adres;
@@ -192,6 +192,7 @@ public class AccountController : Controller
         return RedirectToAction("Index", "Home");
     }
 }
+
 
 
 

@@ -20,3 +20,4 @@ public class EgzersizOnerisiViewModel
     public string? Hedef { get; set; }
 }
 
+

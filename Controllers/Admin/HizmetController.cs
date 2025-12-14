@@ -22,10 +22,18 @@ public class HizmetController : Controller
     // GET: Admin/Hizmet
     public async Task<IActionResult> Index()
     {
-        var hizmetler = await _context.Hizmetler
-            .Include(h => h.SporSalonu)
-            .ToListAsync();
-        return View(hizmetler);
+        try
+        {
+            var hizmetler = await _context.Hizmetler
+                .Include(h => h.SporSalonu)
+                .ToListAsync();
+            return View("~/Views/Admin/Hizmet/Index.cshtml", hizmetler);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Hizmetler listelenirken hata oluştu: {ErrorMessage}", ex.Message);
+            return View("~/Views/Admin/Hizmet/Index.cshtml", new List<Hizmet>());
+        }
     }
 
     // GET: Admin/Hizmet/Details/5
@@ -164,4 +172,5 @@ public class HizmetController : Controller
         return _context.Hizmetler.Any(e => e.Id == id);
     }
 }
+
 

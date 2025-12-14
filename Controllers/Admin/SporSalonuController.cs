@@ -21,8 +21,16 @@ public class SporSalonuController : Controller
     // GET: Admin/SporSalonu
     public async Task<IActionResult> Index()
     {
-        var sporSalonlari = await _context.SporSalonlari.ToListAsync();
-        return View(sporSalonlari);
+        try
+        {
+            var sporSalonlari = await _context.SporSalonlari.ToListAsync();
+            return View("~/Views/Admin/SporSalonu/Index.cshtml", sporSalonlari);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Spor salonları listelenirken hata oluştu: {ErrorMessage}", ex.Message);
+            return View("~/Views/Admin/SporSalonu/Index.cshtml", new List<SporSalonu>());
+        }
     }
 
     // GET: Admin/SporSalonu/Details/5
@@ -157,6 +165,7 @@ public class SporSalonuController : Controller
         return _context.SporSalonlari.Any(e => e.Id == id);
     }
 }
+
 
 
 

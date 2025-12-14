@@ -1,26 +1,135 @@
 # Spor Salonu Yönetim ve Randevu Sistemi
 
-Web Programlama dersi için geliştirdiğim spor salonu yönetim ve randevu sistemi projesi.
+Web Programlama dersi için geliştirilen spor salonu yönetim ve randevu sistemi projesi.
 
 ## Proje Hakkında
 
-Bu projede ASP.NET Core MVC kullanarak bir spor salonu yönetim sistemi yapıyorum. Sistemde spor salonları, antrenörler, hizmetler ve randevu yönetimi olacak. Ayrıca yapay zeka ile egzersiz önerileri de ekleyeceğim.
+Bu projede ASP.NET Core MVC kullanarak bir spor salonu yönetim sistemi geliştirilmiştir. Sistem, spor salonlarının sunduğu hizmetleri, antrenörlerin uzmanlık alanlarını, üyelerin randevularını ve yapay zekâ tabanlı egzersiz önerilerini yönetebilecek niteliktedir.
+
+## Özellikler
+
+### ✅ Tamamlanan Özellikler
+
+- **Spor Salonu Yönetimi**: Spor salonlarının tanımlanması, çalışma saatleri ve hizmet türleri
+- **Antrenör Yönetimi**: Antrenörlerin uzmanlık alanları ve müsaitlik saatleri
+- **Hizmet Yönetimi**: Hizmet türleri, süre ve ücret bilgileri
+- **Randevu Sistemi**: 
+  - Randevu alma (müsaitlik ve çakışma kontrolü)
+  - Randevu onaylama/reddetme (Admin)
+  - Randevu durum takibi
+- **Kullanıcı Yönetimi**: 
+  - Kullanıcı kayıt/giriş
+  - Rol bazlı yetkilendirme (Admin, Üye)
+  - Profil yönetimi
+- **REST API**: 
+  - Antrenör sorgulama ve filtreleme (LINQ)
+  - Randevu sorgulama ve filtreleme
+- **Yapay Zeka Entegrasyonu**: OpenAI API ile kişiselleştirilmiş egzersiz önerileri
+- **Admin Paneli**: Tüm CRUD işlemleri için yönetim paneli
+- **Veri Doğrulama**: Client-side ve server-side validation
 
 ## Kullanılan Teknolojiler
 
-- ASP.NET Core MVC
-- C#
-- SQL Server
-- Entity Framework Core
-- Bootstrap 5
-- OpenAI API (yapay zeka için)
+- **ASP.NET Core MVC 8.0** (LTS)
+- **C#**
+- **SQL Server** (LocalDB)
+- **Entity Framework Core 8.0**
+- **ASP.NET Core Identity** (Kimlik doğrulama ve yetkilendirme)
+- **Bootstrap 5** (Frontend framework)
+- **jQuery & jQuery Validation** (Client-side validation)
+- **OpenAI API** (Yapay zeka entegrasyonu)
 
-## Proje Durumu
+## Kurulum
 
-Proje geliştirme aşamasında. Adım adım özellikler ekleniyor.
+### Gereksinimler
 
-## Notlar
+- .NET 8.0 SDK
+- SQL Server (LocalDB veya SQL Server Express)
+- Visual Studio 2022 veya VS Code
 
-- Admin girişi: ogrencinumarasi@sakarya.edu.tr / sau
-- Veritabanı migration'ları henüz yapılmadı
-- OpenAI API key yapılandırması gerekiyor
+### Adımlar
+
+1. Projeyi klonlayın veya indirin
+2. `appsettings.json` dosyasında veritabanı bağlantı string'ini kontrol edin
+3. OpenAI API key'i yapılandırın (isteğe bağlı):
+   ```json
+   "OpenAI": {
+     "ApiKey": "YOUR_OPENAI_API_KEY_HERE"
+   }
+   ```
+4. Migration'ları oluşturun ve uygulayın:
+   ```bash
+   dotnet ef migrations add InitialCreate
+   dotnet ef database update
+   ```
+5. Projeyi çalıştırın:
+   ```bash
+   dotnet run
+   ```
+
+## Kullanım
+
+### Admin Girişi
+
+- **Email**: `123456789@sakarya.edu.tr` (DbInitializer'da oluşturulur)
+- **Şifre**: `sau`
+
+**Not**: Admin kullanıcısı ilk çalıştırmada otomatik oluşturulur. Öğrenci numaranıza göre `appsettings.json` veya `DbInitializer.cs` dosyasında güncelleyebilirsiniz.
+
+### Kullanıcı Rolleri
+
+- **Admin**: Tüm CRUD işlemleri, randevu onaylama/reddetme
+- **Üye**: Randevu alma, kendi randevularını görüntüleme, AI önerileri
+
+## API Endpoints
+
+### Antrenör API
+- `GET /api/AntrenorApi` - Tüm antrenörleri listele (filtreleme parametreleri: sporSalonuId, uzmanlikAlani, tarih, saat)
+- `GET /api/AntrenorApi/{id}` - Belirli bir antrenörü getir
+
+### Randevu API
+- `GET /api/RandevuApi` - Randevuları listele (filtreleme parametreleri: uyeId, antrenorId, baslangicTarihi, bitisTarihi, durum)
+- `GET /api/RandevuApi/{id}` - Belirli bir randevuyu getir
+
+## Proje Yapısı
+
+```
+SporSalonuYonetim/
+├── Controllers/
+│   ├── Admin/          # Admin paneli controller'ları
+│   ├── Api/            # REST API controller'ları
+│   ├── AccountController.cs
+│   ├── HomeController.cs
+│   ├── RandevuController.cs
+│   └── AIEgzersizController.cs
+├── Models/             # Veritabanı modelleri ve ViewModel'ler
+├── Views/              # Razor view'ları
+├── Data/               # DbContext ve DbInitializer
+├── Services/           # Business logic servisleri (OpenAI)
+└── wwwroot/            # Statik dosyalar (CSS, JS, lib)
+```
+
+## Veritabanı Modelleri
+
+- **ApplicationUser**: Kullanıcı bilgileri (Identity genişletilmiş)
+- **SporSalonu**: Spor salonu bilgileri
+- **Antrenor**: Antrenör bilgileri
+- **Hizmet**: Hizmet türleri ve fiyatları
+- **Randevu**: Randevu bilgileri
+- **AntrenorMüsaitlik**: Antrenör müsaitlik saatleri
+
+## Geliştirme Notları
+
+- Proje ilk çalıştırmada örnek veriler (seed data) otomatik oluşturulur
+- Tüm CRUD işlemleri için validation kuralları uygulanmıştır
+- Client-side ve server-side validation aktif
+- Bootstrap 5 ile responsive tasarım
+- LINQ sorguları ile gelişmiş filtreleme
+
+## Lisans
+
+Bu proje eğitim amaçlı geliştirilmiştir.
+
+## İletişim
+
+Proje hakkında sorularınız için GitHub üzerinden iletişime geçebilirsiniz.

@@ -1,0 +1,76 @@
+@model Antrenor
+@{
+    ViewData["Title"] = "Antrenör Detayları";
+}
+
+<h2>@ViewData["Title"]</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-8">
+        <dl class="row">
+            <dt class="col-sm-3">Ad Soyad:</dt>
+            <dd class="col-sm-9">@Model.Ad @Model.Soyad</dd>
+
+            <dt class="col-sm-3">Spor Salonu:</dt>
+            <dd class="col-sm-9">@(Model.SporSalonu?.Ad ?? "-")</dd>
+
+            @if (!string.IsNullOrEmpty(Model.Email))
+            {
+                <dt class="col-sm-3">E-posta:</dt>
+                <dd class="col-sm-9">@Model.Email</dd>
+            }
+
+            @if (!string.IsNullOrEmpty(Model.Telefon))
+            {
+                <dt class="col-sm-3">Telefon:</dt>
+                <dd class="col-sm-9">@Model.Telefon</dd>
+            }
+
+            @if (!string.IsNullOrEmpty(Model.UzmanlikAlanlari))
+            {
+                <dt class="col-sm-3">Uzmanlık Alanları:</dt>
+                <dd class="col-sm-9">@Model.UzmanlikAlanlari</dd>
+            }
+
+            @if (!string.IsNullOrEmpty(Model.Aciklama))
+            {
+                <dt class="col-sm-3">Açıklama:</dt>
+                <dd class="col-sm-9">@Model.Aciklama</dd>
+            }
+        </dl>
+
+        @if (Model.Müsaitlikler != null && Model.Müsaitlikler.Any())
+        {
+            <h4 class="mt-4">Müsaitlik Saatleri</h4>
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Gün</th>
+                        <th>Başlangıç</th>
+                        <th>Bitiş</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var musaitlik in Model.Müsaitlikler.OrderBy(m => m.HaftaninGunu))
+                    {
+                        <tr>
+                            <td>@musaitlik.HaftaninGunu</td>
+                            <td>@musaitlik.BaslangicSaati.ToString(@"hh\:mm")</td>
+                            <td>@musaitlik.BitisSaati.ToString(@"hh\:mm")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
+
+<div class="mt-3">
+    <a asp-action="PublicList" class="btn btn-secondary">Geri Dön</a>
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <a asp-controller="Randevu" asp-action="Create" asp-route-antrenorId="@Model.Id" class="btn btn-primary">Randevu Al</a>
+    }
+</div>
+

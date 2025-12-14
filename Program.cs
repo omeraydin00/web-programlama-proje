@@ -9,9 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Entity Framework ve SQL Server yapılandırması
+// Entity Framework ve SQLite yapılandırması
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Identity yapılandırması
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
@@ -48,7 +48,11 @@ builder.Services.AddScoped<OpenAIService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
+else
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
@@ -63,6 +67,13 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers(); // API controller'ları için
+
+// Admin area route
+app.MapControllerRoute(
+    name: "admin",
+    pattern: "Admin/{controller}/{action=Index}/{id?}",
+    defaults: new { area = "" });
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

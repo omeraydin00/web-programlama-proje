@@ -1,0 +1,62 @@
+@model IEnumerable<Antrenor>
+@{
+    ViewData["Title"] = "Antrenörler";
+}
+
+<h2>@ViewData["Title"]</h2>
+<p class="lead">Uzman antrenörlerimizi keşfedin</p>
+<hr />
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">Henüz antrenör eklenmemiş.</div>
+}
+else
+{
+    <div class="row">
+        @foreach (var antrenor in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">@antrenor.Ad @antrenor.Soyad</h5>
+                        <p class="card-text">
+                            <strong>Spor Salonu:</strong> @(antrenor.SporSalonu?.Ad ?? "-")<br>
+                            @if (!string.IsNullOrEmpty(antrenor.UzmanlikAlanlari))
+                            {
+                                <strong>Uzmanlık:</strong> @antrenor.UzmanlikAlanlari<br>
+                            }
+                            @if (!string.IsNullOrEmpty(antrenor.Email))
+                            {
+                                <strong>E-posta:</strong> @antrenor.Email<br>
+                            }
+                            @if (!string.IsNullOrEmpty(antrenor.Telefon))
+                            {
+                                <strong>Telefon:</strong> @antrenor.Telefon<br>
+                            }
+                        </p>
+                        @if (!string.IsNullOrEmpty(antrenor.Aciklama))
+                        {
+                            <p class="card-text"><small class="text-muted">@antrenor.Aciklama</small></p>
+                        }
+                        @if (antrenor.Müsaitlikler != null && antrenor.Müsaitlikler.Any())
+                        {
+                            <p class="card-text">
+                                <small class="text-muted">
+                                    <strong>Müsait Günler:</strong>
+                                    @string.Join(", ", antrenor.Müsaitlikler.Select(m => m.HaftaninGunu.ToString()).Distinct())
+                                </small>
+                            </p>
+                        }
+                        <a asp-action="Details" asp-route-id="@antrenor.Id" class="btn btn-primary btn-sm">Detaylar</a>
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <a asp-controller="Randevu" asp-action="Create" asp-route-antrenorId="@antrenor.Id" class="btn btn-success btn-sm">Randevu Al</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+

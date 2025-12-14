@@ -14,7 +14,7 @@ public static class DbInitializer
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
         // Veritabanını oluştur
-        await context.Database.MigrateAsync();
+        await context.Database.EnsureCreatedAsync();
 
         // Rolleri oluştur
         await SeedRolesAsync(roleManager);
@@ -44,7 +44,7 @@ public static class DbInitializer
         // Admin kullanıcısı için öğrenci numarası formatında email
         // Örnek: 123456789@sakarya.edu.tr
         string adminEmail = "123456789@sakarya.edu.tr";
-        string adminPassword = "sau";
+        string adminPassword = "Sau123"; // En az 6 karakter, büyük harf ve rakam içermeli
 
         if (await userManager.FindByEmailAsync(adminEmail) == null)
         {
@@ -172,6 +172,7 @@ public static class DbInitializer
         }
     }
 }
+
 
 
 

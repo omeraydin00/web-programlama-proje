@@ -1,0 +1,228 @@
+{
+  "Version": 1,
+  "Hash": "WRs99GXFS/dOtcJBaRnUi5Ley90edk8pN0QvUULW0jc=",
+  "Source": "SporSalonuYonetim",
+  "BasePath": "_content/SporSalonuYonetim",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "SporSalonuYonetim\\wwwroot",
+      "Source": "SporSalonuYonetim",
+      "ContentRoot": "C:\\Users\\leviv\\Documents\\GitHub\\web-programlama-proje\\wwwroot\\",
+      "BasePath": "_content/SporSalonuYonetim",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\leviv\\Documents\\GitHub\\web-programlama-proje\\wwwroot\\css\\site.css",
+      "SourceId": "SporSalonuYonetim",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\leviv\\Documents\\GitHub\\web-programlama-proje\\wwwroot\\",
+      "BasePath": "_content/SporSalonuYonetim",
+      "RelativePath": "css/site#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "833uh1i1xj",
+      "Integrity": "3N+x987o+FG9U3nBY8hd8OMqpt8c+deKCy2cVVKh/iY=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\site.css"
+    },
+    {
+      "Identity": "C:\\Users\\leviv\\Documents\\GitHub\\web-programlama-proje\\wwwroot\\js\\site.js",
+      "SourceId": "SporSalonuYonetim",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\leviv\\Documents\\GitHub\\web-programlama-proje\\wwwroot\\",
+      "BasePath": "_content/SporSalonuYonetim",
+      "RelativePath": "js/site#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "pgpcntow02",
+      "Integrity": "F2nbYGK+RdTdeB1T9qaBEa6NFPILVxTQiK63jFaJF1E=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\site.js"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "css/site.833uh1i1xj.css",
+      "AssetFile": "C:\\Users\\leviv\\Documents\\GitHub\\web-programlama-proje\\wwwroot\\css\\site.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "493"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"3N+x987o+FG9U3nBY8hd8OMqpt8c+deKCy2cVVKh/iY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 14 Dec 2025 19:38:12 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "833uh1i1xj"
+        },
+        {
+          "Name": "label",
+          "Value": "css/site.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-3N+x987o+FG9U3nBY8hd8OMqpt8c+deKCy2cVVKh/iY="
+        }
+      ]
+    },
+    {
+      "Route": "css/site.css",
+      "AssetFile": "C:\\Users\\leviv\\Documents\\GitHub\\web-programlama-proje\\wwwroot\\css\\site.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "493"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"3N+x987o+FG9U3nBY8hd8OMqpt8c+deKCy2cVVKh/iY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 14 Dec 2025 19:38:12 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-3N+x987o+FG9U3nBY8hd8OMqpt8c+deKCy2cVVKh/iY="
+        }
+      ]
+    },
+    {
+      "Route": "js/site.js",
+      "AssetFile": "C:\\Users\\leviv\\Documents\\GitHub\\web-programlama-proje\\wwwroot\\js\\site.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "51"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"F2nbYGK+RdTdeB1T9qaBEa6NFPILVxTQiK63jFaJF1E=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 14 Dec 2025 19:38:12 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-F2nbYGK+RdTdeB1T9qaBEa6NFPILVxTQiK63jFaJF1E="
+        }
+      ]
+    },
+    {
+      "Route": "js/site.pgpcntow02.js",
+      "AssetFile": "C:\\Users\\leviv\\Documents\\GitHub\\web-programlama-proje\\wwwroot\\js\\site.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "51"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"F2nbYGK+RdTdeB1T9qaBEa6NFPILVxTQiK63jFaJF1E=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 14 Dec 2025 19:38:12 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "pgpcntow02"
+        },
+        {
+          "Name": "label",
+          "Value": "js/site.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-F2nbYGK+RdTdeB1T9qaBEa6NFPILVxTQiK63jFaJF1E="
+        }
+      ]
+    }
+  ]
+}

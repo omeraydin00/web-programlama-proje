@@ -21,24 +21,32 @@ public class RandevuYonetimController : Controller
     // GET: Admin/RandevuYonetim
     public async Task<IActionResult> Index(string? durum)
     {
-        var query = _context.Randevular
-            .Include(r => r.Antrenor)
-            .Include(r => r.Hizmet)
-            .Include(r => r.Uye)
-            .AsQueryable();
-
-        if (!string.IsNullOrEmpty(durum))
+        try
         {
-            query = query.Where(r => r.Durum == durum);
+            var query = _context.Randevular
+                .Include(r => r.Antrenor)
+                .Include(r => r.Hizmet)
+                .Include(r => r.Uye)
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(durum))
+            {
+                query = query.Where(r => r.Durum == durum);
+            }
+
+            var randevular = await query
+                .OrderByDescending(r => r.RandevuTarihi)
+                .ThenByDescending(r => r.BaslangicSaati)
+                .ToListAsync();
+
+            ViewBag.Durum = durum;
+            return View("~/Views/Admin/RandevuYonetim/Index.cshtml", randevular);
         }
-
-        var randevular = await query
-            .OrderByDescending(r => r.RandevuTarihi)
-            .ThenByDescending(r => r.BaslangicSaati)
-            .ToListAsync();
-
-        ViewBag.Durum = durum;
-        return View(randevular);
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Randevular listelenirken hata oluştu: {ErrorMessage}", ex.Message);
+            return View("~/Views/Admin/RandevuYonetim/Index.cshtml", new List<Randevu>());
+        }
     }
 
     // POST: Admin/RandevuYonetim/Onayla/5
@@ -95,4 +103,5 @@ public class RandevuYonetimController : Controller
         return RedirectToAction(nameof(Index));
     }
 }
+
 
