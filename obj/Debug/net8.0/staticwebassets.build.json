@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "WRs99GXFS/dOtcJBaRnUi5Ley90edk8pN0QvUULW0jc=",
+  "Hash": "NmAcYojB4sqiJUSPHiEZnqEQcbqZqW4WvWRIJWZnoxc=",
   "Source": "SporSalonuYonetim",
   "BasePath": "_content/SporSalonuYonetim",
   "Mode": "Default",
@@ -31,8 +31,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "833uh1i1xj",
-      "Integrity": "3N+x987o+FG9U3nBY8hd8OMqpt8c+deKCy2cVVKh/iY=",
+      "Fingerprint": "xptzqqm03z",
+      "Integrity": "NeNy6pltRc5HB2Y1e2Q+0OTPl7gcubSKLStJabpr7WQ=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\site.css"
@@ -52,59 +52,14 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "pgpcntow02",
-      "Integrity": "F2nbYGK+RdTdeB1T9qaBEa6NFPILVxTQiK63jFaJF1E=",
+      "Fingerprint": "n97eiqt6i1",
+      "Integrity": "S2Y8J18VKXNOjvD5G6Uu5/3i/eTiwIKGStV6TPpliPk=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\site.js"
     }
   ],
   "Endpoints": [
-    {
-      "Route": "css/site.833uh1i1xj.css",
-      "AssetFile": "C:\\Users\\leviv\\Documents\\GitHub\\web-programlama-proje\\wwwroot\\css\\site.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "493"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"3N+x987o+FG9U3nBY8hd8OMqpt8c+deKCy2cVVKh/iY=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Sun, 14 Dec 2025 19:38:12 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "833uh1i1xj"
-        },
-        {
-          "Name": "label",
-          "Value": "css/site.css"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-3N+x987o+FG9U3nBY8hd8OMqpt8c+deKCy2cVVKh/iY="
-        }
-      ]
-    },
     {
       "Route": "css/site.css",
       "AssetFile": "C:\\Users\\leviv\\Documents\\GitHub\\web-programlama-proje\\wwwroot\\css\\site.css",
@@ -116,7 +71,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "493"
+          "Value": "495"
         },
         {
           "Name": "Content-Type",
@@ -124,11 +79,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"3N+x987o+FG9U3nBY8hd8OMqpt8c+deKCy2cVVKh/iY=\""
+          "Value": "\"NeNy6pltRc5HB2Y1e2Q+0OTPl7gcubSKLStJabpr7WQ=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 14 Dec 2025 19:38:12 GMT"
+          "Value": "Mon, 15 Dec 2025 20:17:10 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -138,7 +93,52 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-3N+x987o+FG9U3nBY8hd8OMqpt8c+deKCy2cVVKh/iY="
+          "Value": "sha256-NeNy6pltRc5HB2Y1e2Q+0OTPl7gcubSKLStJabpr7WQ="
+        }
+      ]
+    },
+    {
+      "Route": "css/site.xptzqqm03z.css",
+      "AssetFile": "C:\\Users\\leviv\\Documents\\GitHub\\web-programlama-proje\\wwwroot\\css\\site.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "495"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"NeNy6pltRc5HB2Y1e2Q+0OTPl7gcubSKLStJabpr7WQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 15 Dec 2025 20:17:10 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "xptzqqm03z"
+        },
+        {
+          "Name": "label",
+          "Value": "css/site.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-NeNy6pltRc5HB2Y1e2Q+0OTPl7gcubSKLStJabpr7WQ="
         }
       ]
     },
@@ -153,7 +153,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "51"
+          "Value": "53"
         },
         {
           "Name": "Content-Type",
@@ -161,11 +161,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"F2nbYGK+RdTdeB1T9qaBEa6NFPILVxTQiK63jFaJF1E=\""
+          "Value": "\"S2Y8J18VKXNOjvD5G6Uu5/3i/eTiwIKGStV6TPpliPk=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 14 Dec 2025 19:38:12 GMT"
+          "Value": "Mon, 15 Dec 2025 20:17:10 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -175,12 +175,12 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-F2nbYGK+RdTdeB1T9qaBEa6NFPILVxTQiK63jFaJF1E="
+          "Value": "sha256-S2Y8J18VKXNOjvD5G6Uu5/3i/eTiwIKGStV6TPpliPk="
         }
       ]
     },
     {
-      "Route": "js/site.pgpcntow02.js",
+      "Route": "js/site.n97eiqt6i1.js",
       "AssetFile": "C:\\Users\\leviv\\Documents\\GitHub\\web-programlama-proje\\wwwroot\\js\\site.js",
       "Selectors": [],
       "ResponseHeaders": [
@@ -190,7 +190,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "51"
+          "Value": "53"
         },
         {
           "Name": "Content-Type",
@@ -198,11 +198,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"F2nbYGK+RdTdeB1T9qaBEa6NFPILVxTQiK63jFaJF1E=\""
+          "Value": "\"S2Y8J18VKXNOjvD5G6Uu5/3i/eTiwIKGStV6TPpliPk=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 14 Dec 2025 19:38:12 GMT"
+          "Value": "Mon, 15 Dec 2025 20:17:10 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -212,7 +212,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "pgpcntow02"
+          "Value": "n97eiqt6i1"
         },
         {
           "Name": "label",
@@ -220,7 +220,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-F2nbYGK+RdTdeB1T9qaBEa6NFPILVxTQiK63jFaJF1E="
+          "Value": "sha256-S2Y8J18VKXNOjvD5G6Uu5/3i/eTiwIKGStV6TPpliPk="
         }
       ]
     }

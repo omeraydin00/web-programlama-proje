@@ -53,14 +53,14 @@ public class HizmetController : Controller
             return NotFound();
         }
 
-        return View(hizmet);
+        return View("~/Views/Admin/Hizmet/Details.cshtml", hizmet);
     }
 
     // GET: Admin/Hizmet/Create
     public IActionResult Create()
     {
         ViewData["SporSalonuId"] = new SelectList(_context.SporSalonlari, "Id", "Ad");
-        return View();
+        return View("~/Views/Admin/Hizmet/Create.cshtml");
     }
 
     // POST: Admin/Hizmet/Create
@@ -77,7 +77,7 @@ public class HizmetController : Controller
             return RedirectToAction(nameof(Index));
         }
         ViewData["SporSalonuId"] = new SelectList(_context.SporSalonlari, "Id", "Ad", hizmet.SporSalonuId);
-        return View(hizmet);
+        return View("~/Views/Admin/Hizmet/Create.cshtml", hizmet);
     }
 
     // GET: Admin/Hizmet/Edit/5
@@ -94,7 +94,7 @@ public class HizmetController : Controller
             return NotFound();
         }
         ViewData["SporSalonuId"] = new SelectList(_context.SporSalonlari, "Id", "Ad", hizmet.SporSalonuId);
-        return View(hizmet);
+        return View("~/Views/Admin/Hizmet/Edit.cshtml", hizmet);
     }
 
     // POST: Admin/Hizmet/Edit/5
@@ -129,7 +129,7 @@ public class HizmetController : Controller
             return RedirectToAction(nameof(Index));
         }
         ViewData["SporSalonuId"] = new SelectList(_context.SporSalonlari, "Id", "Ad", hizmet.SporSalonuId);
-        return View(hizmet);
+        return View("~/Views/Admin/Hizmet/Edit.cshtml", hizmet);
     }
 
     // GET: Admin/Hizmet/Delete/5
@@ -148,7 +148,7 @@ public class HizmetController : Controller
             return NotFound();
         }
 
-        return View(hizmet);
+        return View("~/Views/Admin/Hizmet/Delete.cshtml", hizmet);
     }
 
     // POST: Admin/Hizmet/Delete/5
@@ -172,5 +172,6 @@ public class HizmetController : Controller
         return _context.Hizmetler.Any(e => e.Id == id);
     }
 }
+
 
 

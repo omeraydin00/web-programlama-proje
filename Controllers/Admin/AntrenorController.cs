@@ -55,14 +55,14 @@ public class AntrenorController : Controller
             return NotFound();
         }
 
-        return View(antrenor);
+        return View("~/Views/Admin/Antrenor/Details.cshtml", antrenor);
     }
 
     // GET: Admin/Antrenor/Create
     public IActionResult Create()
     {
         ViewData["SporSalonuId"] = new SelectList(_context.SporSalonlari, "Id", "Ad");
-        return View();
+        return View("~/Views/Admin/Antrenor/Create.cshtml");
     }
 
     // POST: Admin/Antrenor/Create
@@ -79,7 +79,7 @@ public class AntrenorController : Controller
             return RedirectToAction(nameof(Index));
         }
         ViewData["SporSalonuId"] = new SelectList(_context.SporSalonlari, "Id", "Ad", antrenor.SporSalonuId);
-        return View(antrenor);
+        return View("~/Views/Admin/Antrenor/Create.cshtml", antrenor);
     }
 
     // GET: Admin/Antrenor/Edit/5
@@ -96,7 +96,7 @@ public class AntrenorController : Controller
             return NotFound();
         }
         ViewData["SporSalonuId"] = new SelectList(_context.SporSalonlari, "Id", "Ad", antrenor.SporSalonuId);
-        return View(antrenor);
+        return View("~/Views/Admin/Antrenor/Edit.cshtml", antrenor);
     }
 
     // POST: Admin/Antrenor/Edit/5
@@ -131,7 +131,7 @@ public class AntrenorController : Controller
             return RedirectToAction(nameof(Index));
         }
         ViewData["SporSalonuId"] = new SelectList(_context.SporSalonlari, "Id", "Ad", antrenor.SporSalonuId);
-        return View(antrenor);
+        return View("~/Views/Admin/Antrenor/Edit.cshtml", antrenor);
     }
 
     // GET: Admin/Antrenor/Delete/5
@@ -150,7 +150,7 @@ public class AntrenorController : Controller
             return NotFound();
         }
 
-        return View(antrenor);
+        return View("~/Views/Admin/Antrenor/Delete.cshtml", antrenor);
     }
 
     // POST: Admin/Antrenor/Delete/5
@@ -174,6 +174,7 @@ public class AntrenorController : Controller
         return _context.Antrenorler.Any(e => e.Id == id);
     }
 }
+
 
 
 

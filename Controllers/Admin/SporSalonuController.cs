@@ -51,13 +51,13 @@ public class SporSalonuController : Controller
             return NotFound();
         }
 
-        return View(sporSalonu);
+        return View("~/Views/Admin/SporSalonu/Details.cshtml", sporSalonu);
     }
 
     // GET: Admin/SporSalonu/Create
     public IActionResult Create()
     {
-        return View();
+        return View("~/Views/Admin/SporSalonu/Create.cshtml");
     }
 
     // POST: Admin/SporSalonu/Create
@@ -73,7 +73,7 @@ public class SporSalonuController : Controller
             _logger.LogInformation("Yeni spor salonu eklendi: {Ad}", sporSalonu.Ad);
             return RedirectToAction(nameof(Index));
         }
-        return View(sporSalonu);
+        return View("~/Views/Admin/SporSalonu/Create.cshtml", sporSalonu);
     }
 
     // GET: Admin/SporSalonu/Edit/5
@@ -89,7 +89,7 @@ public class SporSalonuController : Controller
         {
             return NotFound();
         }
-        return View(sporSalonu);
+        return View("~/Views/Admin/SporSalonu/Edit.cshtml", sporSalonu);
     }
 
     // POST: Admin/SporSalonu/Edit/5
@@ -123,7 +123,7 @@ public class SporSalonuController : Controller
             }
             return RedirectToAction(nameof(Index));
         }
-        return View(sporSalonu);
+        return View("~/Views/Admin/SporSalonu/Edit.cshtml", sporSalonu);
     }
 
     // GET: Admin/SporSalonu/Delete/5
@@ -141,7 +141,7 @@ public class SporSalonuController : Controller
             return NotFound();
         }
 
-        return View(sporSalonu);
+        return View("~/Views/Admin/SporSalonu/Delete.cshtml", sporSalonu);
     }
 
     // POST: Admin/SporSalonu/Delete/5
@@ -165,6 +165,7 @@ public class SporSalonuController : Controller
         return _context.SporSalonlari.Any(e => e.Id == id);
     }
 }
+
 
 
 
