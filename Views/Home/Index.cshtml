@@ -2,42 +2,67 @@
     ViewData["Title"] = "Ana Sayfa";
 }
 
-<div class="text-center mb-5">
-    <h1 class="display-4 fw-bold text-primary">Spor Salonu Yönetim ve Randevu Sistemi</h1>
-    <p class="lead">Spor salonu hizmetlerini yönetin, antrenörlerle randevu alın ve kişiselleştirilmiş egzersiz önerileri alın.</p>
+<div class="text-center mb-5 py-4">
+    <h1 class="display-4 fw-bold mb-3">Spor Salonu Yönetim ve Randevu Sistemi</h1>
+    <p class="lead">Spor salonu hizmetlerini yönetin, antrenörlerle randevu alın ve kişiselleştirilmiş egzersiz
+        önerileri alın.</p>
 </div>
 
 <!-- İstatistikler -->
 <div class="row mb-5">
-    <div class="col-md-3">
-        <div class="card text-center border-primary">
+    <div class="col-md-3 mb-4">
+        <div class="card text-center border-primary h-100">
             <div class="card-body">
-                <h2 class="text-primary">@ViewBag.ToplamAntrenor</h2>
-                <p class="card-text">Antrenör</p>
+                <div class="mb-3">
+                    <i class="bi bi-person-badge"
+                        style="font-size: 3rem; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>
+                </div>
+                <h2 class="mb-2"
+                    style="background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                    @ViewBag.ToplamAntrenor</h2>
+                <p class="card-text fw-semibold">Antrenör</p>
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="card text-center border-success">
+    <div class="col-md-3 mb-4">
+        <div class="card text-center border-success h-100">
             <div class="card-body">
-                <h2 class="text-success">@ViewBag.ToplamHizmet</h2>
-                <p class="card-text">Hizmet</p>
+                <div class="mb-3">
+                    <i class="bi bi-star-fill"
+                        style="font-size: 3rem; background: var(--success-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>
+                </div>
+                <h2 class="mb-2"
+                    style="background: var(--success-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                    @ViewBag.ToplamHizmet</h2>
+                <p class="card-text fw-semibold">Hizmet</p>
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="card text-center border-info">
+    <div class="col-md-3 mb-4">
+        <div class="card text-center border-info h-100">
             <div class="card-body">
-                <h2 class="text-info">@ViewBag.ToplamRandevu</h2>
-                <p class="card-text">Randevu</p>
+                <div class="mb-3">
+                    <i class="bi bi-calendar-check-fill"
+                        style="font-size: 3rem; background: var(--success-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>
+                </div>
+                <h2 class="mb-2"
+                    style="background: var(--success-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                    @ViewBag.ToplamRandevu</h2>
+                <p class="card-text fw-semibold">Randevu</p>
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="card text-center border-warning">
+    <div class="col-md-3 mb-4">
+        <div class="card text-center border-warning h-100">
             <div class="card-body">
-                <h2 class="text-warning">@(ViewBag.SporSalonlari != null ? ((List<SporSalonu>)ViewBag.SporSalonlari).Count : 0)</h2>
-                <p class="card-text">Spor Salonu</p>
+                <div class="mb-3">
+                    <i class="bi bi-building"
+                        style="font-size: 3rem; background: var(--warning-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>
+                </div>
+                <h2 class="mb-2"
+                    style="background: var(--warning-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+                    @(ViewBag.SporSalonlari != null ? ((List<SporSalonu>)ViewBag.SporSalonlari).Count : 0)</h2>
+                <p class="card-text fw-semibold">Spor Salonu</p>
             </div>
         </div>
     </div>
@@ -49,17 +74,23 @@
         <div class="card h-100 shadow-sm">
             <div class="card-body text-center">
                 <div class="mb-3">
-                    <i class="bi bi-calendar-check" style="font-size: 3rem; color: #0d6efd;"></i>
+                    <i class="bi bi-calendar-check-fill"
+                        style="font-size: 3rem; background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>
                 </div>
-                <h5 class="card-title">Randevu Al</h5>
-                <p class="card-text">Uygun antrenör ve saat seçerek randevu alabilirsiniz. Müsaitlik kontrolü otomatik yapılır.</p>
+                <h5 class="card-title fw-bold">Randevu Al</h5>
+                <p class="card-text">Uygun antrenör ve saat seçerek randevu alabilirsiniz. Müsaitlik kontrolü otomatik
+                    yapılır.</p>
                 @if (User.Identity?.IsAuthenticated == true)
                 {
-                    <a asp-controller="Randevu" asp-action="Create" class="btn btn-primary">Randevu Al</a>
+                    <a asp-controller="Randevu" asp-action="Create" class="btn btn-primary mt-2">
+                        <i class="bi bi-calendar-plus me-2"></i>Randevu Al
+                    </a>
                 }
                 else
                 {
-                    <a asp-controller="Account" asp-action="Login" class="btn btn-primary">Giriş Yap</a>
+                    <a asp-controller="Account" asp-action="Login" class="btn btn-primary mt-2">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Giriş Yap
+                    </a>
                 }
             </div>
         </div>
@@ -68,11 +99,15 @@
         <div class="card h-100 shadow-sm">
             <div class="card-body text-center">
                 <div class="mb-3">
-                    <i class="bi bi-people" style="font-size: 3rem; color: #198754;"></i>
+                    <i class="bi bi-people-fill"
+                        style="font-size: 3rem; background: var(--success-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>
                 </div>
-                <h5 class="card-title">Antrenörler</h5>
-                <p class="card-text">Uzman antrenörlerimiz ve hizmetlerimizi keşfedin. Her antrenörün uzmanlık alanları ve müsaitlik saatleri görüntülenebilir.</p>
-                <a asp-controller="Antrenor" asp-action="PublicList" class="btn btn-success">Antrenörleri Gör</a>
+                <h5 class="card-title fw-bold">Antrenörler</h5>
+                <p class="card-text">Uzman antrenörlerimiz ve hizmetlerimizi keşfedin. Her antrenörün uzmanlık alanları
+                    ve müsaitlik saatleri görüntülenebilir.</p>
+                <a asp-controller="Antrenor" asp-action="PublicList" class="btn btn-success mt-2">
+                    <i class="bi bi-arrow-right-circle me-2"></i>Antrenörleri Gör
+                </a>
             </div>
         </div>
     </div>
@@ -80,17 +115,23 @@
         <div class="card h-100 shadow-sm">
             <div class="card-body text-center">
                 <div class="mb-3">
-                    <i class="bi bi-robot" style="font-size: 3rem; color: #ffc107;"></i>
+                    <i class="bi bi-robot"
+                        style="font-size: 3rem; background: var(--warning-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>
                 </div>
-                <h5 class="card-title">AI Önerileri</h5>
-                <p class="card-text">Yapay zeka ile size özel egzersiz önerileri alın. Vücut tipinize ve hedeflerinize göre kişiselleştirilmiş programlar.</p>
+                <h5 class="card-title fw-bold">AI Önerileri</h5>
+                <p class="card-text">Yapay zeka ile size özel egzersiz önerileri alın. Vücut tipinize ve hedeflerinize
+                    göre kişiselleştirilmiş programlar.</p>
                 @if (User.Identity?.IsAuthenticated == true)
                 {
-                    <a asp-controller="AIEgzersiz" asp-action="Index" class="btn btn-warning">AI Önerileri</a>
+                    <a asp-controller="AIEgzersiz" asp-action="Index" class="btn btn-warning mt-2">
+                        <i class="bi bi-magic me-2"></i>AI Önerileri
+                    </a>
                 }
                 else
                 {
-                    <a asp-controller="Account" asp-action="Login" class="btn btn-warning">Giriş Yap</a>
+                    <a asp-controller="Account" asp-action="Login" class="btn btn-warning mt-2">
+                        <i class="bi bi-box-arrow-in-right me-2"></i>Giriş Yap
+                    </a>
                 }
             </div>
         </div>
@@ -100,38 +141,43 @@
 <!-- Spor Salonları -->
 @if (ViewBag.SporSalonlari != null && ((List<SporSalonu>)ViewBag.SporSalonlari).Any())
 {
-    <h3 class="mb-4">Spor Salonlarımız</h3>
-    <div class="row">
-        @foreach (var salon in (List<SporSalonu>)ViewBag.SporSalonlari)
-        {
-            <div class="col-md-4 mb-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">@salon.Ad</h5>
-                        <p class="card-text">
-                            <small class="text-muted">
-                                <i class="bi bi-clock"></i> @salon.AcilisSaati.ToString(@"hh\:mm") - @salon.KapanisSaati.ToString(@"hh\:mm")
-                            </small>
-                        </p>
-                        @if (salon.Adres != null)
-                        {
-                            <p class="card-text"><small><i class="bi bi-geo-alt"></i> @salon.Adres</small></p>
-                        }
-                        <p class="card-text">
-                            <small class="text-muted">
-                                @(salon.Antrenorler?.Count ?? 0) Antrenör • @(salon.Hizmetler?.Count ?? 0) Hizmet
-                            </small>
-                        </p>
+    <div class="mb-5">
+        <h3 class="mb-4 fw-bold">
+            <i class="bi bi-building me-2"></i>Spor Salonlarımız
+        </h3>
+        <div class="row">
+            @foreach (var salon in (List<SporSalonu>)ViewBag.SporSalonlari)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold mb-3">
+                                <i class="bi bi-building-fill me-2 text-primary"></i>@salon.Ad
+                            </h5>
+                            <p class="card-text mb-2">
+                                <i class="bi bi-clock-fill me-2 text-primary"></i>
+                                <strong>Çalışma Saatleri:</strong> @salon.AcilisSaati.ToString(@"hh\:mm") -
+                                @salon.KapanisSaati.ToString(@"hh\:mm")
+                            </p>
+                            @if (salon.Adres != null)
+                            {
+                                <p class="card-text mb-2">
+                                    <i class="bi bi-geo-alt-fill me-2 text-primary"></i>
+                                    <strong>Adres:</strong> @salon.Adres
+                                </p>
+                            }
+                            <p class="card-text">
+                                <span class="badge bg-primary me-2">
+                                    <i class="bi bi-person-badge me-1"></i>@(salon.Antrenorler?.Count ?? 0) Antrenör
+                                </span>
+                                <span class="badge bg-success">
+                                    <i class="bi bi-star me-1"></i>@(salon.Hizmetler?.Count ?? 0) Hizmet
+                                </span>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
 }
-
-
-
-
-
-
-

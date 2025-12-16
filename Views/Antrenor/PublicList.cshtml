@@ -3,13 +3,19 @@
     ViewData["Title"] = "Antrenörler";
 }
 
-<h2>@ViewData["Title"]</h2>
-<p class="lead">Uzman antrenörlerimizi keşfedin</p>
-<hr />
+<div class="mb-4">
+    <h2 class="fw-bold mb-2">
+        <i class="bi bi-people-fill me-2"></i>@ViewData["Title"]
+    </h2>
+    <p class="lead">Uzman antrenörlerimizi keşfedin</p>
+</div>
 
 @if (!Model.Any())
 {
-    <div class="alert alert-info">Henüz antrenör eklenmemiş.</div>
+    <div class="alert alert-info d-flex align-items-center">
+        <i class="bi bi-info-circle-fill me-2"></i>
+        <span>Henüz antrenör eklenmemiş.</span>
+    </div>
 }
 else
 {
@@ -19,45 +25,80 @@ else
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow-sm">
                     <div class="card-body">
-                        <h5 class="card-title">@antrenor.Ad @antrenor.Soyad</h5>
-                        <p class="card-text">
-                            <strong>Spor Salonu:</strong> @(antrenor.SporSalonu?.Ad ?? "-")<br>
-                            @if (!string.IsNullOrEmpty(antrenor.UzmanlikAlanlari))
-                            {
-                                <strong>Uzmanlık:</strong> @antrenor.UzmanlikAlanlari<br>
-                            }
-                            @if (!string.IsNullOrEmpty(antrenor.Email))
-                            {
-                                <strong>E-posta:</strong> @antrenor.Email<br>
-                            }
-                            @if (!string.IsNullOrEmpty(antrenor.Telefon))
-                            {
-                                <strong>Telefon:</strong> @antrenor.Telefon<br>
-                            }
-                        </p>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="rounded-circle bg-primary bg-gradient d-flex align-items-center justify-content-center me-3"
+                                style="width: 60px; height: 60px;">
+                                <i class="bi bi-person-fill text-white" style="font-size: 1.5rem;"></i>
+                            </div>
+                            <div>
+                                <h5 class="card-title mb-0 fw-bold">@antrenor.Ad @antrenor.Soyad</h5>
+                                @if (antrenor.SporSalonu != null)
+                                {
+                                    <small class="text-muted">
+                                        <i class="bi bi-building me-1"></i>@antrenor.SporSalonu.Ad
+                                    </small>
+                                }
+                            </div>
+                        </div>
+
+                        @if (!string.IsNullOrEmpty(antrenor.UzmanlikAlanlari))
+                        {
+                            <p class="card-text mb-2">
+                                <i class="bi bi-star-fill text-warning me-2"></i>
+                                <strong>Uzmanlık:</strong> @antrenor.UzmanlikAlanlari
+                            </p>
+                        }
+
+                        @if (!string.IsNullOrEmpty(antrenor.Email))
+                        {
+                            <p class="card-text mb-2">
+                                <i class="bi bi-envelope me-2 text-primary"></i>
+                                <small>@antrenor.Email</small>
+                            </p>
+                        }
+
+                        @if (!string.IsNullOrEmpty(antrenor.Telefon))
+                        {
+                            <p class="card-text mb-2">
+                                <i class="bi bi-telephone me-2 text-primary"></i>
+                                <small>@antrenor.Telefon</small>
+                            </p>
+                        }
+
                         @if (!string.IsNullOrEmpty(antrenor.Aciklama))
                         {
-                            <p class="card-text"><small class="text-muted">@antrenor.Aciklama</small></p>
+                            <p class="card-text mb-3">
+                                <small class="text-muted">@antrenor.Aciklama</small>
+                            </p>
                         }
+
                         @if (antrenor.Müsaitlikler != null && antrenor.Müsaitlikler.Any())
                         {
-                            <p class="card-text">
+                            <p class="card-text mb-3">
+                                <i class="bi bi-calendar-check me-2 text-success"></i>
+                                <strong>Müsait Günler:</strong>
+                                <br>
                                 <small class="text-muted">
-                                    <strong>Müsait Günler:</strong>
                                     @string.Join(", ", antrenor.Müsaitlikler.Select(m => m.HaftaninGunu.ToString()).Distinct())
                                 </small>
                             </p>
                         }
-                        <a asp-action="Details" asp-route-id="@antrenor.Id" class="btn btn-primary btn-sm">Detaylar</a>
-                        @if (User.Identity?.IsAuthenticated == true)
-                        {
-                            <a asp-controller="Randevu" asp-action="Create" asp-route-antrenorId="@antrenor.Id" class="btn btn-success btn-sm">Randevu Al</a>
-                        }
+
+                        <div class="d-flex gap-2">
+                            <a asp-action="Details" asp-route-id="@antrenor.Id" class="btn btn-primary btn-sm flex-fill">
+                                <i class="bi bi-info-circle me-1"></i>Detaylar
+                            </a>
+                            @if (User.Identity?.IsAuthenticated == true)
+                            {
+                                <a asp-controller="Randevu" asp-action="Create" asp-route-antrenorId="@antrenor.Id"
+                                    class="btn btn-success btn-sm flex-fill">
+                                    <i class="bi bi-calendar-plus me-1"></i>Randevu Al
+                                </a>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
         }
     </div>
 }
-
-
