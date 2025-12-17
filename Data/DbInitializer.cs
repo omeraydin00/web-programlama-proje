@@ -44,7 +44,7 @@ public static class DbInitializer
         // Admin kullanıcısı için öğrenci numarası formatında email
         // Örnek: 123456789@sakarya.edu.tr
         string adminEmail = "123456789@sakarya.edu.tr";
-        string adminPassword = "Sau123"; // En az 6 karakter, büyük harf ve rakam içermeli
+        string adminPassword = "sau"; // Gereksinimlere uygun şifre
 
         if (await userManager.FindByEmailAsync(adminEmail) == null)
         {

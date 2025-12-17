@@ -71,10 +71,10 @@ Bu projede ASP.NET Core MVC kullanarak bir spor salonu yönetim sistemi gelişti
 
 ### Admin Girişi
 
-- **Email**: `123456789@sakarya.edu.tr` (DbInitializer'da oluşturulur)
+- **Email**: `ogrencinumarasi@sakarya.edu.tr` (DbInitializer'da oluşturulur, örnek: `123456789@sakarya.edu.tr`)
 - **Şifre**: `sau`
 
-**Not**: Admin kullanıcısı ilk çalıştırmada otomatik oluşturulur. Öğrenci numaranıza göre `appsettings.json` veya `DbInitializer.cs` dosyasında güncelleyebilirsiniz.
+**Not**: Admin kullanıcısı ilk çalıştırmada otomatik oluşturulur. Öğrenci numaranıza göre `DbInitializer.cs` dosyasında `adminEmail` değişkenini güncelleyebilirsiniz.
 
 ### Kullanıcı Rolleri
 
