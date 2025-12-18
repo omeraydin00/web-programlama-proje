@@ -21,12 +21,14 @@ public class AccountController : Controller
         _logger = logger;
     }
 
+    [AllowAnonymous]
     [HttpGet]
     public IActionResult Register()
     {
         return View();
     }
 
+    [AllowAnonymous]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Register(RegisterViewModel model)
@@ -48,7 +50,7 @@ public class AccountController : Controller
             {
                 // Kullanıcıya "Üye" rolünü ata
                 await _userManager.AddToRoleAsync(user, "Üye");
-                
+
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 _logger.LogInformation("Yeni kullanıcı kaydı: {Email}", model.Email);
                 return RedirectToAction("Index", "Home");
@@ -63,6 +65,7 @@ public class AccountController : Controller
         return View(model);
     }
 
+    [AllowAnonymous]
     [HttpGet]
     public IActionResult Login(string? returnUrl = null)
     {
@@ -70,6 +73,7 @@ public class AccountController : Controller
         return View();
     }
 
+    [AllowAnonymous]
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl = null)
@@ -79,9 +83,9 @@ public class AccountController : Controller
         if (ModelState.IsValid)
         {
             var result = await _signInManager.PasswordSignInAsync(
-                model.Email, 
-                model.Password, 
-                model.RememberMe, 
+                model.Email,
+                model.Password,
+                model.RememberMe,
                 lockoutOnFailure: false);
 
             if (result.Succeeded)
@@ -177,6 +181,7 @@ public class AccountController : Controller
         return View(model);
     }
 
+    [AllowAnonymous]
     [HttpGet]
     public IActionResult AccessDenied()
     {

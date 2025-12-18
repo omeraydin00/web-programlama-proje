@@ -3,70 +3,106 @@
     ViewData["Title"] = "Randevularım";
 }
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>@ViewData["Title"]</h2>
-    <a asp-action="Create" class="btn btn-primary">Yeni Randevu Al</a>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold mb-1">
+            <i class="bi bi-calendar-check me-2"></i>@ViewData["Title"]
+        </h2>
+        <p class="text-muted mb-0">Randevularınızı görüntüleyin ve yönetin</p>
+    </div>
+    <a asp-action="Create" class="btn btn-primary">
+        <i class="bi bi-plus-circle me-2"></i>Yeni Randevu Al
+    </a>
 </div>
 
 @if (TempData["Error"] != null)
 {
-    <div class="alert alert-danger">@TempData["Error"]</div>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>@TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
 }
 
 @if (!Model.Any())
 {
-    <div class="alert alert-info">Henüz randevunuz bulunmamaktadır.</div>
+    <div class="alert alert-info d-flex align-items-center">
+        <i class="bi bi-info-circle-fill me-3" style="font-size: 2rem;"></i>
+        <div>
+            <h5 class="alert-heading mb-1">Henüz randevunuz bulunmamaktadır</h5>
+            <p class="mb-0">Yeni randevu almak için yukarıdaki butona tıklayın.</p>
+        </div>
+    </div>
 }
 else
 {
     <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
+        <table class="table table-hover align-middle">
+            <thead class="table-dark">
                 <tr>
-                    <th>Tarih</th>
-                    <th>Saat</th>
-                    <th>Antrenör</th>
-                    <th>Hizmet</th>
-                    <th>Ücret</th>
-                    <th>Durum</th>
-                    <th>İşlemler</th>
+                    <th><i class="bi bi-calendar me-2"></i>Tarih</th>
+                    <th><i class="bi bi-clock me-2"></i>Saat</th>
+                    <th><i class="bi bi-person-badge me-2"></i>Antrenör</th>
+                    <th><i class="bi bi-star me-2"></i>Hizmet</th>
+                    <th><i class="bi bi-currency-dollar me-2"></i>Ücret</th>
+                    <th><i class="bi bi-info-circle me-2"></i>Durum</th>
+                    <th class="text-end"><i class="bi bi-gear me-2"></i>İşlemler</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@item.RandevuTarihi.ToString("dd.MM.yyyy")</td>
-                        <td>@item.BaslangicSaati.ToString(@"hh\:mm") - @item.BitisSaati.ToString(@"hh\:mm")</td>
+                        <td class="fw-semibold">@item.RandevuTarihi.ToString("dd.MM.yyyy")</td>
+                        <td>
+                            <span class="badge bg-secondary">
+                                <i class="bi bi-clock-history me-1"></i>
+                                @item.BaslangicSaati.ToString(@"hh\:mm") - @item.BitisSaati.ToString(@"hh\:mm")
+                            </span>
+                        </td>
                         <td>@(item.Antrenor?.Ad ?? "-") @(item.Antrenor?.Soyad ?? "")</td>
                         <td>@(item.Hizmet?.Ad ?? "-")</td>
-                        <td>@item.ToplamUcret.ToString("C")</td>
+                        <td class="fw-semibold text-success">@item.ToplamUcret.ToString("C")</td>
                         <td>
                             @if (item.Durum == "Onaylandı")
                             {
-                                <span class="badge bg-success">@item.Durum</span>
+                                <span class="badge bg-success">
+                                    <i class="bi bi-check-circle me-1"></i>@item.Durum
+                                </span>
                             }
                             else if (item.Durum == "Beklemede")
                             {
-                                <span class="badge bg-warning">@item.Durum</span>
+                                <span class="badge bg-warning">
+                                    <i class="bi bi-hourglass-split me-1"></i>@item.Durum
+                                </span>
                             }
                             else if (item.Durum == "İptal")
                             {
-                                <span class="badge bg-danger">@item.Durum</span>
+                                <span class="badge bg-danger">
+                                    <i class="bi bi-x-circle me-1"></i>@item.Durum
+                                </span>
                             }
                             else
                             {
-                                <span class="badge bg-info">@item.Durum</span>
+                                <span class="badge bg-info">
+                                    <i class="bi bi-check2-all me-1"></i>@item.Durum
+                                </span>
                             }
                         </td>
-                        <td>
-                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Detay</a>
-                            @if (item.Durum != "İptal" && item.Durum != "Tamamlandı")
-                            {
-                                <form asp-action="Cancel" asp-route-id="@item.Id" method="post" class="d-inline">
-                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Randevuyu iptal etmek istediğinizden emin misiniz?')">İptal Et</button>
-                                </form>
-                            }
+                        <td class="text-end">
+                            <div class="btn-group" role="group">
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info" title="Detay">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                @if (item.Durum != "İptal" && item.Durum != "Tamamlandı")
+                                {
+                                    <form asp-action="Cancel" asp-route-id="@item.Id" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-danger" title="İptal Et"
+                                            onclick="return confirm('Randevuyu iptal etmek istediğinizden emin misiniz?')">
+                                            <i class="bi bi-x-circle"></i>
+                                        </button>
+                                    </form>
+                                }
+                            </div>
                         </td>
                     </tr>
                 }
@@ -74,6 +110,7 @@ else
         </table>
     </div>
 }
+<<<<<<< HEAD
 
 
 
@@ -82,3 +119,5 @@ else
 
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> fcae538b27ebfb1a5eb911e74d3c6efdc7ee7737

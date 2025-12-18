@@ -3,83 +3,66 @@
     ViewData["Title"] = "Randevu Yönetimi";
 }
 
-<h2>@ViewData["Title"]</h2>
-<hr />
-
-<div class="mb-3">
-    <form method="get" class="d-inline-flex gap-2">
-        <select name="durum" class="form-select" style="width: auto;">
-            <option value="">Tüm Durumlar</option>
-            <option value="Beklemede" selected="@(ViewBag.Durum == "Beklemede")">Beklemede</option>
-            <option value="Onaylandı" selected="@(ViewBag.Durum == "Onaylandı")">Onaylandı</option>
-            <option value="İptal" selected="@(ViewBag.Durum == "İptal")">İptal</option>
-            <option value="Tamamlandı" selected="@(ViewBag.Durum == "Tamamlandı")">Tamamlandı</option>
-        </select>
-        <button type="submit" class="btn btn-primary">Filtrele</button>
-        <a asp-action="Index" class="btn btn-secondary">Temizle</a>
-    </form>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="fw-bold mb-1">
+            <i class="bi bi-calendar-check me-2"></i>@ViewData["Title"]
+        </h2>
+        <p class="text-muted mb-0">Tüm randevuları görüntüleyin ve yönetin</p>
+    </div>
 </div>
 
-<div class="table-responsive">
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Tarih</th>
-                <th>Saat</th>
-                <th>Üye</th>
-                <th>Antrenör</th>
-                <th>Hizmet</th>
-                <th>Ücret</th>
-                <th>Durum</th>
-                <th>İşlemler</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="get" class="row g-3 align-items-end">
+            <div class="col-md-4">
+                <label for="durum" class="form-label">Durum Filtresi</label>
+                <select name="durum" id="durum" class="form-select">
+                    <option value="">Tüm Durumlar</option>
+                    <option value="Beklemede" selected="@(ViewBag.Durum == "Beklemede")">Beklemede</option>
+                    <option value="Onaylandı" selected="@(ViewBag.Durum == "Onaylandı")">Onaylandı</option>
+                    <option value="İptal" selected="@(ViewBag.Durum == "İptal")">İptal</option>
+                    <option value="Tamamlandı" selected="@(ViewBag.Durum == "Tamamlandı")">Tamamlandı</option>
+                </select>
+            </div>
+            <div class="col-md-auto">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-funnel me-2"></i>Filtrele
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="bi bi-x-circle me-2"></i>Temizle
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info d-flex align-items-center">
+        <i class="bi bi-info-circle-fill me-3" style="font-size: 2rem;"></i>
+        <div>
+            <h5 class="alert-heading mb-1">Henüz randevu bulunmamaktadır</h5>
+            <p class="mb-0">Sistemde kayıtlı randevu bulunmamaktadır.</p>
+        </div>
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead class="table-dark">
                 <tr>
-                    <td>@item.RandevuTarihi.ToString("dd.MM.yyyy")</td>
-                    <td>@item.BaslangicSaati.ToString(@"hh\:mm") - @item.BitisSaati.ToString(@"hh\:mm")</td>
-                    <td>@(item.Uye?.Ad ?? "-") @(item.Uye?.Soyad ?? "")</td>
-                    <td>@(item.Antrenor?.Ad ?? "-") @(item.Antrenor?.Soyad ?? "")</td>
-                    <td>@(item.Hizmet?.Ad ?? "-")</td>
-                    <td>@item.ToplamUcret.ToString("C")</td>
-                    <td>
-                        @if (item.Durum == "Onaylandı")
-                        {
-                            <span class="badge bg-success">@item.Durum</span>
-                        }
-                        else if (item.Durum == "Beklemede")
-                        {
-                            <span class="badge bg-warning">@item.Durum</span>
-                        }
-                        else if (item.Durum == "İptal")
-                        {
-                            <span class="badge bg-danger">@item.Durum</span>
-                        }
-                        else
-                        {
-                            <span class="badge bg-info">@item.Durum</span>
-                        }
-                    </td>
-                    <td>
-                        @if (item.Durum == "Beklemede")
-                        {
-                            <form asp-action="Onayla" asp-route-id="@item.Id" method="post" class="d-inline">
-                                <button type="submit" class="btn btn-sm btn-success">Onayla</button>
-                            </form>
-                            <form asp-action="Reddet" asp-route-id="@item.Id" method="post" class="d-inline">
-                                <button type="submit" class="btn btn-sm btn-danger">Reddet</button>
-                            </form>
-                        }
-                        else if (item.Durum == "Onaylandı")
-                        {
-                            <form asp-action="Tamamla" asp-route-id="@item.Id" method="post" class="d-inline">
-                                <button type="submit" class="btn btn-sm btn-primary">Tamamla</button>
-                            </form>
-                        }
-                    </td>
+                    <th><i class="bi bi-calendar me-2"></i>Tarih</th>
+                    <th><i class="bi bi-clock me-2"></i>Saat</th>
+                    <th><i class="bi bi-person me-2"></i>Üye</th>
+                    <th><i class="bi bi-person-badge me-2"></i>Antrenör</th>
+                    <th><i class="bi bi-star me-2"></i>Hizmet</th>
+                    <th><i class="bi bi-currency-dollar me-2"></i>Ücret</th>
+                    <th><i class="bi bi-info-circle me-2"></i>Durum</th>
+                    <th class="text-end"><i class="bi bi-gear me-2"></i>İşlemler</th>
                 </tr>
+<<<<<<< HEAD
             }
         </tbody>
     </table>
@@ -92,3 +75,78 @@
 
 =======
 >>>>>>> Stashed changes
+=======
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="fw-semibold">@item.RandevuTarihi.ToString("dd.MM.yyyy")</td>
+                        <td>
+                            <span class="badge bg-secondary">
+                                <i class="bi bi-clock-history me-1"></i>
+                                @item.BaslangicSaati.ToString(@"hh\:mm") - @item.BitisSaati.ToString(@"hh\:mm")
+                            </span>
+                        </td>
+                        <td>@(item.Uye?.Ad ?? "-") @(item.Uye?.Soyad ?? "")</td>
+                        <td>@(item.Antrenor?.Ad ?? "-") @(item.Antrenor?.Soyad ?? "")</td>
+                        <td>@(item.Hizmet?.Ad ?? "-")</td>
+                        <td class="fw-semibold text-success">@item.ToplamUcret.ToString("C")</td>
+                        <td>
+                            @if (item.Durum == "Onaylandı")
+                            {
+                                <span class="badge bg-success">
+                                    <i class="bi bi-check-circle me-1"></i>@item.Durum
+                                </span>
+                            }
+                            else if (item.Durum == "Beklemede")
+                            {
+                                <span class="badge bg-warning">
+                                    <i class="bi bi-hourglass-split me-1"></i>@item.Durum
+                                </span>
+                            }
+                            else if (item.Durum == "İptal")
+                            {
+                                <span class="badge bg-danger">
+                                    <i class="bi bi-x-circle me-1"></i>@item.Durum
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-info">
+                                    <i class="bi bi-check2-all me-1"></i>@item.Durum
+                                </span>
+                            }
+                        </td>
+                        <td class="text-end">
+                            <div class="btn-group" role="group">
+                                @if (item.Durum == "Beklemede")
+                                {
+                                    <form asp-action="Onayla" asp-route-id="@item.Id" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-success" title="Onayla">
+                                            <i class="bi bi-check-circle me-1"></i>Onayla
+                                        </button>
+                                    </form>
+                                    <form asp-action="Reddet" asp-route-id="@item.Id" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-danger" title="Reddet">
+                                            <i class="bi bi-x-circle me-1"></i>Reddet
+                                        </button>
+                                    </form>
+                                }
+                                else if (item.Durum == "Onaylandı")
+                                {
+                                    <form asp-action="Tamamla" asp-route-id="@item.Id" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-primary" title="Tamamla">
+                                            <i class="bi bi-check2-all me-1"></i>Tamamla
+                                        </button>
+                                    </form>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+>>>>>>> fcae538b27ebfb1a5eb911e74d3c6efdc7ee7737

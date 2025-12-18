@@ -92,10 +92,17 @@ Bulut tabanlı API’ler yerine **Ollama** kullanılarak, yapay zekâ özellikle
 
 ### Admin Girişi
 
+<<<<<<< HEAD
 * **Email**: `123456789@sakarya.edu.tr` (DbInitializer’da oluşturulur)
 * **Şifre**: `sau`
 
 **Not**: Admin kullanıcısı ilk çalıştırmada otomatik oluşturulur. Öğrenci numaranıza göre `DbInitializer.cs` dosyasından güncellenebilir.
+=======
+- **Email**: `ogrencinumarasi@sakarya.edu.tr` (DbInitializer'da oluşturulur, örnek: `123456789@sakarya.edu.tr`)
+- **Şifre**: `sau`
+
+**Not**: Admin kullanıcısı ilk çalıştırmada otomatik oluşturulur. Öğrenci numaranıza göre `DbInitializer.cs` dosyasında `adminEmail` değişkenini güncelleyebilirsiniz.
+>>>>>>> fcae538b27ebfb1a5eb911e74d3c6efdc7ee7737
 
 ### Kullanıcı Rolleri
 
