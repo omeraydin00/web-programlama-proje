@@ -30,21 +30,21 @@ public class RandevuController : Controller
     {
         try
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                return NotFound();
-            }
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+        {
+            return NotFound();
+        }
 
-            var randevular = await _context.Randevular
-                .Include(r => r.Antrenor)
-                .Include(r => r.Hizmet)
-                .Where(r => r.UyeId == user.Id)
-                .OrderByDescending(r => r.RandevuTarihi)
-                .ThenByDescending(r => r.BaslangicSaati)
-                .ToListAsync();
+        var randevular = await _context.Randevular
+            .Include(r => r.Antrenor)
+            .Include(r => r.Hizmet)
+            .Where(r => r.UyeId == user.Id)
+            .OrderByDescending(r => r.RandevuTarihi)
+            .ThenByDescending(r => r.BaslangicSaati)
+            .ToListAsync();
 
-            return View(randevular);
+        return View(randevular);
         }
         catch (Exception ex)
         {

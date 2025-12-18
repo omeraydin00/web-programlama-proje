@@ -20,19 +20,19 @@ public class HomeController : Controller
     public async Task<IActionResult> Index()
     {
         try
-        {
-            var sporSalonlari = await _context.SporSalonlari
-                .Include(s => s.Antrenorler)
-                .Include(s => s.Hizmetler)
-                .Take(3)
-                .ToListAsync();
+    {
+        var sporSalonlari = await _context.SporSalonlari
+            .Include(s => s.Antrenorler)
+            .Include(s => s.Hizmetler)
+            .Take(3)
+            .ToListAsync();
 
             ViewBag.SporSalonlari = sporSalonlari ?? new List<SporSalonu>();
-            ViewBag.ToplamAntrenor = await _context.Antrenorler.CountAsync();
-            ViewBag.ToplamHizmet = await _context.Hizmetler.CountAsync();
-            ViewBag.ToplamRandevu = await _context.Randevular.CountAsync();
+        ViewBag.ToplamAntrenor = await _context.Antrenorler.CountAsync();
+        ViewBag.ToplamHizmet = await _context.Hizmetler.CountAsync();
+        ViewBag.ToplamRandevu = await _context.Randevular.CountAsync();
 
-            return View();
+        return View();
         }
         catch (Exception ex)
         {

@@ -22,4 +22,7 @@ public class ApplicationUser : IdentityUser
 
 
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes

@@ -24,9 +24,9 @@ public class AntrenorController : Controller
     {
         try
         {
-            var antrenorler = await _context.Antrenorler
-                .Include(a => a.SporSalonu)
-                .ToListAsync();
+        var antrenorler = await _context.Antrenorler
+            .Include(a => a.SporSalonu)
+            .ToListAsync();
             return View("~/Views/Admin/Antrenor/Index.cshtml", antrenorler);
         }
         catch (Exception ex)
@@ -181,4 +181,7 @@ public class AntrenorController : Controller
 
 
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes

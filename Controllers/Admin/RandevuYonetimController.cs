@@ -107,4 +107,7 @@ public class RandevuYonetimController : Controller
 
 
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes

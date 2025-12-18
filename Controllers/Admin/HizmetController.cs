@@ -24,9 +24,9 @@ public class HizmetController : Controller
     {
         try
         {
-            var hizmetler = await _context.Hizmetler
-                .Include(h => h.SporSalonu)
-                .ToListAsync();
+        var hizmetler = await _context.Hizmetler
+            .Include(h => h.SporSalonu)
+            .ToListAsync();
             return View("~/Views/Admin/Hizmet/Index.cshtml", hizmetler);
         }
         catch (Exception ex)
@@ -176,4 +176,7 @@ public class HizmetController : Controller
 
 
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes

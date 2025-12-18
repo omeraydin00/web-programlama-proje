@@ -23,7 +23,7 @@ public class SporSalonuController : Controller
     {
         try
         {
-            var sporSalonlari = await _context.SporSalonlari.ToListAsync();
+        var sporSalonlari = await _context.SporSalonlari.ToListAsync();
             return View("~/Views/Admin/SporSalonu/Index.cshtml", sporSalonlari);
         }
         catch (Exception ex)
@@ -172,4 +172,7 @@ public class SporSalonuController : Controller
 
 
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
