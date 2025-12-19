@@ -1,5 +1,13 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace SporSalonuYonetim.Services;
 
@@ -26,33 +34,94 @@ public class OllamaService
         double? boy = null,
         double? kilo = null,
         string? hedef = null,
-        bool gorselSonucIste = false)
+        bool gorselSonucIste = false,
+        string? fotoYolu = null)
     {
         var baseUrl = _configuration["Ollama:BaseUrl"] ?? "http://localhost:11434";
         var model = _configuration["Ollama:Model"] ?? "llama3.2"; // Varsayılan model
 
         try
         {
-            var prompt = BuildPrompt(vucutTipi, boy, kilo, hedef, gorselSonucIste);
+            var prompt = BuildPrompt(vucutTipi, boy, kilo, hedef, gorselSonucIste, fotoYolu != null);
 
-            // Ollama Chat API formatı
-            var requestBody = new
+            // Görüntü varsa base64'e çevir (Ollama formatı: sadece base64 string, data URL prefix yok)
+            string? base64Image = null;
+            if (!string.IsNullOrEmpty(fotoYolu))
             {
-                model = model,
-                messages = new[]
+                try
                 {
-                    new { role = "system", content = "Sen bir fitness ve egzersiz uzmanısın. Türkçe olarak kullanıcılara kişiselleştirilmiş egzersiz önerileri sunuyorsun. Detaylı, anlaşılır ve uygulanabilir öneriler veriyorsun." },
-                    new { role = "user", content = prompt }
-                },
-                stream = false,
-                options = new
-                {
-                    temperature = 0.7,
-                    num_predict = 1000 // Maksimum token sayısı
+                    var fullPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", fotoYolu.TrimStart('/'));
+                    if (System.IO.File.Exists(fullPath))
+                    {
+                        var imageBytes = await System.IO.File.ReadAllBytesAsync(fullPath);
+                        // Ollama sadece base64 string istiyor, data URL prefix'i istemiyor
+                        base64Image = Convert.ToBase64String(imageBytes);
+                    }
                 }
-            };
+                catch (Exception ex)
+                {
+                    _logger.LogWarning(ex, "Görüntü base64'e çevrilemedi, sadece metin gönderilecek.");
+                }
+            }
 
-            var json = JsonSerializer.Serialize(requestBody);
+            // Ollama Chat API formatı - Vision model desteği
+            string json;
+
+            if (!string.IsNullOrEmpty(base64Image))
+            {
+                // Vision model kullan (llava, llama3.2-vision, vb.)
+                var visionModel = _configuration["Ollama:VisionModel"] ?? "llava"; // Varsayılan vision model
+
+                // Ollama Vision API formatı - JSON manuel oluştur
+                var visionRequest = new Dictionary<string, object>
+                {
+                    ["model"] = visionModel,
+                    ["messages"] = new object[]
+                    {
+                        new Dictionary<string, object>
+                        {
+                            ["role"] = "system",
+                            ["content"] = "Sen bir fitness ve egzersiz uzmanısın. Türkçe olarak kullanıcılara kişiselleştirilmiş egzersiz önerileri sunuyorsun. Yüklenen fotoğrafı analiz ederek vücut tipi, duruş ve genel fiziksel durum hakkında değerlendirme yapabilirsin. Detaylı, anlaşılır ve uygulanabilir öneriler veriyorsun."
+                        },
+                        new Dictionary<string, object>
+                        {
+                            ["role"] = "user",
+                            ["content"] = prompt,
+                            ["images"] = new[] { base64Image } // Ollama formatı: images array'inde base64 string
+                        }
+                    },
+                    ["stream"] = false,
+                    ["options"] = new Dictionary<string, object>
+                    {
+                        ["temperature"] = 0.7,
+                        ["num_predict"] = 1500 // Vision modelleri daha fazla token kullanabilir
+                    }
+                };
+
+                json = JsonSerializer.Serialize(visionRequest);
+            }
+            else
+            {
+                // Normal text-only model
+                var textRequest = new
+                {
+                    model = model,
+                    messages = new[]
+                    {
+                        new { role = "system", content = "Sen bir fitness ve egzersiz uzmanısın. Türkçe olarak kullanıcılara kişiselleştirilmiş egzersiz önerileri sunuyorsun. Detaylı, anlaşılır ve uygulanabilir öneriler veriyorsun." },
+                        new { role = "user", content = prompt }
+                    },
+                    stream = false,
+                    options = new
+                    {
+                        temperature = 0.7,
+                        num_predict = 1000 // Maksimum token sayısı
+                    }
+                };
+
+                json = JsonSerializer.Serialize(textRequest);
+            }
+
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PostAsync("/api/chat", content);
@@ -98,9 +167,19 @@ public class OllamaService
         }
     }
 
-    private string BuildPrompt(string? vucutTipi, double? boy, double? kilo, string? hedef, bool gorselSonucIste = false)
+    private string BuildPrompt(string? vucutTipi, double? boy, double? kilo, string? hedef, bool gorselSonucIste = false, bool fotoVarMi = false)
     {
         var prompt = new StringBuilder();
+
+        if (fotoVarMi)
+        {
+            prompt.AppendLine("Yüklenen fotoğrafı analiz ederek:");
+            prompt.AppendLine("- Vücut tipini değerlendir");
+            prompt.AppendLine("- Fiziksel durumu gözlemle");
+            prompt.AppendLine("- Vücut kompozisyonu hakkında bilgi ver");
+            prompt.AppendLine();
+        }
+
         prompt.AppendLine("Aşağıdaki bilgilere göre bana kişiselleştirilmiş bir egzersiz programı öner:");
 
         if (!string.IsNullOrEmpty(vucutTipi))
@@ -140,4 +219,5 @@ public class OllamaService
         return prompt.ToString();
     }
 }
+
 

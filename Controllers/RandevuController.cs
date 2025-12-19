@@ -30,21 +30,21 @@ public class RandevuController : Controller
     {
         try
         {
-        var user = await _userManager.GetUserAsync(User);
-        if (user == null)
-        {
-            return NotFound();
-        }
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return NotFound();
+            }
 
-        var randevular = await _context.Randevular
-            .Include(r => r.Antrenor)
-            .Include(r => r.Hizmet)
-            .Where(r => r.UyeId == user.Id)
-            .OrderByDescending(r => r.RandevuTarihi)
-            .ThenByDescending(r => r.BaslangicSaati)
-            .ToListAsync();
+            var randevular = await _context.Randevular
+                .Include(r => r.Antrenor)
+                .Include(r => r.Hizmet)
+                .Where(r => r.UyeId == user.Id)
+                .OrderByDescending(r => r.RandevuTarihi)
+                .ThenByDescending(r => r.BaslangicSaati)
+                .ToListAsync();
 
-        return View(randevular);
+            return View(randevular);
         }
         catch (Exception ex)
         {
@@ -59,15 +59,15 @@ public class RandevuController : Controller
         var antrenorler = await _context.Antrenorler
             .Select(a => new { a.Id, Ad = a.Ad + " " + a.Soyad })
             .ToListAsync();
-        
+
         ViewData["AntrenorId"] = new SelectList(antrenorler, "Id", "Ad", antrenorId);
         ViewData["HizmetId"] = new SelectList(_context.Hizmetler, "Id", "Ad");
-        
+
         if (antrenorId.HasValue)
         {
             ViewBag.SelectedAntrenorId = antrenorId.Value;
         }
-        
+
         return View();
     }
 
@@ -133,14 +133,18 @@ public class RandevuController : Controller
         }
 
         // Çakışma kontrolü - Aynı antrenör ve saatte başka randevu var mı?
-        var cakisma = await _context.Randevular
+        // SQLite TimeSpan karşılaştırmalarını desteklemediği için önce veritabanından çekip sonra memory'de filtreliyoruz
+        var randevuTarihiDate = randevu.RandevuTarihi.Date;
+        var potansiyelCakisanRandevular = await _context.Randevular
             .Where(r => r.AntrenorId == randevu.AntrenorId
-                && r.RandevuTarihi.Date == randevu.RandevuTarihi.Date
-                && r.Durum != "İptal"
-                && ((r.BaslangicSaati <= randevu.BaslangicSaati && r.BitisSaati > randevu.BaslangicSaati)
+                && r.RandevuTarihi.Date == randevuTarihiDate
+                && r.Durum != "İptal")
+            .ToListAsync();
+
+        var cakisma = potansiyelCakisanRandevular
+            .Any(r => (r.BaslangicSaati <= randevu.BaslangicSaati && r.BitisSaati > randevu.BaslangicSaati)
                     || (r.BaslangicSaati < randevu.BitisSaati && r.BitisSaati >= randevu.BitisSaati)
-                    || (r.BaslangicSaati >= randevu.BaslangicSaati && r.BitisSaati <= randevu.BitisSaati)))
-            .AnyAsync();
+                    || (r.BaslangicSaati >= randevu.BaslangicSaati && r.BitisSaati <= randevu.BitisSaati));
 
         if (cakisma)
         {

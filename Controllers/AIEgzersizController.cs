@@ -63,7 +63,8 @@ public class AIEgzersizController : Controller
                 model.Boy,
                 model.Kilo,
                 model.Hedef,
-                model.GorselSonucIste);
+                model.GorselSonucIste,
+                fotoYolu);
 
             ViewBag.Recommendation = recommendation;
             ViewBag.GorselSonucIste = model.GorselSonucIste;

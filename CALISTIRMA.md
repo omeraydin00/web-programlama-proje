@@ -151,3 +151,4 @@ Terminal'de `Ctrl + C` tuşlarına basın.
 
 1. `.sln` dosyasını açın (varsa)
 2. F5 tuşuna basın veya "Start" butonuna tıklayın
+

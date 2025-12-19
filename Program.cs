@@ -47,6 +47,9 @@ builder.Services.AddScoped<OllamaService>();
 
 var app = builder.Build();
 
+// Port yapılandırması - macOS'ta port 5000 AirPlay Receiver tarafından kullanılıyor
+app.Urls.Add("http://localhost:5001");
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

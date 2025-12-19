@@ -42,7 +42,7 @@ public class AntrenorApiController : ControllerBase
         // Uzmanlık alanı filtresi
         if (!string.IsNullOrEmpty(uzmanlikAlani))
         {
-            query = query.Where(a => a.UzmanlikAlanlari != null && 
+            query = query.Where(a => a.UzmanlikAlanlari != null &&
                 a.UzmanlikAlanlari.Contains(uzmanlikAlani));
         }
 
@@ -52,21 +52,27 @@ public class AntrenorApiController : ControllerBase
             var gun = tarih.Value.DayOfWeek;
             var bitisSaati = saat.Value.Add(TimeSpan.FromHours(1)); // Varsayılan 1 saatlik randevu
 
-            query = query.Where(a => a.Müsaitlikler.Any(m => 
+            query = query.Where(a => a.Müsaitlikler.Any(m =>
                 m.HaftaninGunu == gun &&
                 m.BaslangicSaati <= saat.Value &&
                 m.BitisSaati >= bitisSaati));
 
             // Çakışan randevuları kontrol et
-            var cakisanAntrenorIds = await _context.Randevular
-                .Where(r => r.RandevuTarihi.Date == tarih.Value.Date &&
-                           r.Durum != "İptal" &&
-                           ((r.BaslangicSaati <= saat.Value && r.BitisSaati > saat.Value) ||
+            // SQLite TimeSpan karşılaştırmalarını desteklemediği için önce veritabanından çekip sonra memory'de filtreliyoruz
+            var tarihDate = tarih.Value.Date;
+            var potansiyelCakisanRandevular = await _context.Randevular
+                .Where(r => r.RandevuTarihi.Date == tarihDate &&
+                           r.Durum != "İptal")
+                .Select(r => new { r.AntrenorId, r.BaslangicSaati, r.BitisSaati })
+                .ToListAsync();
+
+            var cakisanAntrenorIds = potansiyelCakisanRandevular
+                .Where(r => (r.BaslangicSaati <= saat.Value && r.BitisSaati > saat.Value) ||
                             (r.BaslangicSaati < bitisSaati && r.BitisSaati >= bitisSaati) ||
-                            (r.BaslangicSaati >= saat.Value && r.BitisSaati <= bitisSaati)))
+                            (r.BaslangicSaati >= saat.Value && r.BitisSaati <= bitisSaati))
                 .Select(r => r.AntrenorId)
                 .Distinct()
-                .ToListAsync();
+                .ToList();
 
             query = query.Where(a => !cakisanAntrenorIds.Contains(a.Id));
         }
