@@ -24,7 +24,3 @@ public class LoginViewModel
 
 
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes

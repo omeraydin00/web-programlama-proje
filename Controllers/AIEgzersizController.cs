@@ -81,7 +81,3 @@ public class AIEgzersizController : Controller
 
 
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes

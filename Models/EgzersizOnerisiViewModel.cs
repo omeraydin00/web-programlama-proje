@@ -29,7 +29,3 @@ public class EgzersizOnerisiViewModel
 
 
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes

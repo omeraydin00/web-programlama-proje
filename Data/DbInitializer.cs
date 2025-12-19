@@ -42,8 +42,8 @@ public static class DbInitializer
     private static async Task SeedAdminUserAsync(UserManager<ApplicationUser> userManager)
     {
         // Admin kullanıcısı için öğrenci numarası formatında email
-        // Örnek: 123456789@sakarya.edu.tr
-        string adminEmail = "123456789@sakarya.edu.tr";
+        // Örnek: G221210370@sakarya.edu.tr
+        string adminEmail = "G221210370@sakarya.edu.tr";
         string adminPassword = "sau"; // Gereksinimlere uygun şifre
 
         if (await userManager.FindByEmailAsync(adminEmail) == null)
@@ -179,7 +179,3 @@ public static class DbInitializer
 
 
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes

@@ -170,7 +170,3 @@ public class RandevuApiController : ControllerBase
 
 
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes

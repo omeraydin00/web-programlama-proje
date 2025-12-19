@@ -33,7 +33,7 @@ public class OllamaService
 
         try
         {
-            var prompt = BuildPrompt(vucutTipi, boy, kilo, hedef);
+            var prompt = BuildPrompt(vucutTipi, boy, kilo, hedef, gorselSonucIste);
 
             // Ollama Chat API formatı
             var requestBody = new
@@ -98,7 +98,7 @@ public class OllamaService
         }
     }
 
-    private string BuildPrompt(string? vucutTipi, double? boy, double? kilo, string? hedef)
+    private string BuildPrompt(string? vucutTipi, double? boy, double? kilo, string? hedef, bool gorselSonucIste = false)
     {
         var prompt = new StringBuilder();
         prompt.AppendLine("Aşağıdaki bilgilere göre bana kişiselleştirilmiş bir egzersiz programı öner:");

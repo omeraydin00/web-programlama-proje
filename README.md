@@ -12,94 +12,22 @@ Bulut tabanlı API’ler yerine **Ollama** kullanılarak, yapay zekâ özellikle
 
 ### ✅ Tamamlanan Özellikler
 
-<<<<<<< Updated upstream
-* **Spor Salonu Yönetimi**: Spor salonlarının tanımlanması, çalışma saatleri ve hizmet türleri
-* **Antrenör Yönetimi**: Antrenörlerin uzmanlık alanları ve müsaitlik saatleri
-* **Hizmet Yönetimi**: Hizmet türleri, süre ve ücret bilgileri
-* **Randevu Sistemi**:
-
-  * Randevu alma (müsaitlik ve çakışma kontrolü)
-  * Randevu onaylama/reddetme (Admin)
-  * Randevu durum takibi
-* **Kullanıcı Yönetimi**:
-
-  * Kullanıcı kayıt/giriş
-  * Rol bazlı yetkilendirme (Admin, Üye)
-  * Profil yönetimi
-* **REST API**:
-
-  * Antrenör sorgulama ve filtreleme (LINQ)
-  * Randevu sorgulama ve filtreleme
-* **Yapay Zeka Entegrasyonu (Ollama)**:
-
-  * Yerel LLM kullanarak kişiselleştirilmiş egzersiz önerileri
-  * İnternet bağlantısı gerektirmez
-  * API key ihtiyacı yoktur
-* **Admin Paneli**: Tüm CRUD işlemleri için yönetim paneli
-* **Veri Doğrulama**: Client-side ve server-side validation
-
-## Kullanılan Teknolojiler
-
-* **ASP.NET Core MVC 8.0** (LTS)
-* **C#**
-* **SQL Server** (LocalDB)
-* **Entity Framework Core 8.0**
-* **ASP.NET Core Identity** (Kimlik doğrulama ve yetkilendirme)
-* **Bootstrap 5** (Frontend framework)
-* **jQuery & jQuery Validation** (Client-side validation)
-* **Ollama** (Yerel yapay zekâ / LLM entegrasyonu)
-=======
-- **Spor Salonu Yönetimi**: Spor salonlarının tanımlanması, çalışma saatleri ve hizmet türleri
-- **Antrenör Yönetimi**: Antrenörlerin uzmanlık alanları ve müsaitlik saatleri
-- **Hizmet Yönetimi**: Hizmet türleri, süre ve ücret bilgileri
-- **Randevu Sistemi**: 
-  - Randevu alma (müsaitlik ve çakışma kontrolü)
-  - Randevu onaylama/reddetme (Admin)
-  - Randevu durum takibi
-- **Kullanıcı Yönetimi**: 
-  - Kullanıcı kayıt/giriş
-  - Rol bazlı yetkilendirme (Admin, Üye)
-  - Profil yönetimi
-- **REST API**: 
-  - Antrenör sorgulama ve filtreleme (LINQ)
-  - Randevu sorgulama ve filtreleme
-- **Yapay Zeka Entegrasyonu**: Ollama ile local yapay zeka tabanlı kişiselleştirilmiş egzersiz önerileri
-- **Admin Paneli**: Tüm CRUD işlemleri için yönetim paneli
-- **Veri Doğrulama**: Client-side ve server-side validation
-
-## Kullanılan Teknolojiler
-
-- **ASP.NET Core MVC 8.0** (LTS)
-- **C#**
-- **SQL Server** (LocalDB)
-- **Entity Framework Core 8.0**
-- **ASP.NET Core Identity** (Kimlik doğrulama ve yetkilendirme)
-- **Bootstrap 5** (Frontend framework)
-- **jQuery & jQuery Validation** (Client-side validation)
-- **Ollama** (Local yapay zeka entegrasyonu)
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+* Front-End (arayüz) - Bootstrap 5 ile modern ve responsive tasarım
+* CRUD İşlemleri - Tüm temel varlıklar için (SporSalonu, Antrenor, Hizmet, Randevu)
+* Veri Doğrulama - Hem istemci hem sunucu tarafında (jQuery Validation, Data Annotations)
+* Admin Paneli - Tüm yönetim işlemleri için ayrı panel
+* Kullanıcı Kayıt/Üye Olma - Identity ile güvenli kayıt sistemi
+* Rol Bazlı Yetkilendirme - Admin ve Üye rolleri
+* REST API - LINQ sorguları ile filtreleme desteği
+* Yapay Zeka Entegrasyonu - Ollama ile lokal AI egzersiz önerileri
 
 ## Kurulum
 
 ### Gereksinimler
 
-<<<<<<< Updated upstream
-* .NET 8.0 SDK
-* SQL Server (LocalDB veya SQL Server Express)
-* Visual Studio 2022 veya VS Code
-* **Ollama (Local LLM Runtime)**
-=======
-- .NET 8.0 SDK
-- SQLite (Projede dahil)
-- Visual Studio 2022 veya VS Code
-- Ollama (Yapay zeka özellikleri için - isteğe bağlı)
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+* .NET 8.0 SDK veya üzeri
+* SQLite (Entity Framework Core ile otomatik yönetilir)
+* Ollama (AI özellikleri için - opsiyonel)
 
 ### Ollama Kurulumu
 
@@ -118,29 +46,6 @@ Bulut tabanlı API’ler yerine **Ollama** kullanılarak, yapay zekâ özellikle
 ### Proje Kurulumu
 
 1. Projeyi klonlayın veya indirin
-<<<<<<< Updated upstream
-2. `appsettings.json` dosyasında veritabanı bağlantı string’ini kontrol edin
-3. **Ollama için ekstra API key gerekmez**
-4. Migration’ları oluşturun ve uygulayın:
-
-=======
-2. `appsettings.json` dosyasında veritabanı bağlantı string'ini kontrol edin
-3. Ollama'yı kurun ve yapılandırın (AI özellikleri için):
-   - Ollama'yı indirin: https://ollama.com
-   - Terminal'de model indirin:
-     ```bash
-     ollama pull llama3.2
-     ```
-   - Ollama'nın çalıştığından emin olun (varsayılan: http://localhost:11434)
-   - `appsettings.json` dosyasında Ollama ayarlarını kontrol edin:
-     ```json
-     "Ollama": {
-       "BaseUrl": "http://localhost:11434",
-       "Model": "llama3.2"
-     }
-     ```
-4. Migration'ları oluşturun ve uygulayın:
->>>>>>> Stashed changes
    ```bash
    dotnet ef migrations add InitialCreate
    dotnet ef database update
@@ -157,18 +62,10 @@ Bulut tabanlı API’ler yerine **Ollama** kullanılarak, yapay zekâ özellikle
 
 ### Admin Girişi
 
-<<<<<<< HEAD
-* **Email**: `123456789@sakarya.edu.tr` (DbInitializer’da oluşturulur)
-* **Şifre**: `sau`
+* Email: `G221210370@sakarya.edu.tr`
+* Şifre: `sau`
 
-**Not**: Admin kullanıcısı ilk çalıştırmada otomatik oluşturulur. Öğrenci numaranıza göre `DbInitializer.cs` dosyasından güncellenebilir.
-=======
-- **Email**: `ogrencinumarasi@sakarya.edu.tr` (DbInitializer'da oluşturulur, örnek: `123456789@sakarya.edu.tr`)
-- **Şifre**: `sau`
-
-**Not**: Admin kullanıcısı ilk çalıştırmada otomatik oluşturulur. Öğrenci numaranıza göre `DbInitializer.cs` dosyasında `adminEmail` değişkenini güncelleyebilirsiniz.
->>>>>>> fcae538b27ebfb1a5eb911e74d3c6efdc7ee7737
-
+**Not:** Admin kullanıcısı ilk çalıştırmada otomatik oluşturulur.
 ### Kullanıcı Rolleri
 
 * **Admin**: Tüm CRUD işlemleri, randevu onaylama/reddetme

@@ -172,7 +172,3 @@ public class SporSalonuController : Controller
 
 
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes

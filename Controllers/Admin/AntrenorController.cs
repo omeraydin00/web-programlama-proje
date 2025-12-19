@@ -181,7 +181,3 @@ public class AntrenorController : Controller
 
 
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes

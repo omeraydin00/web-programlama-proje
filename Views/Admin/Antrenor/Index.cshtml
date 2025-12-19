@@ -15,48 +15,6 @@
     </a>
 </div>
 
-<<<<<<< HEAD
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Ad Soyad</th>
-            <th>Email</th>
-            <th>Telefon</th>
-            <th>Spor Salonu</th>
-            <th>Uzmanlık Alanları</th>
-            <th>İşlemler</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@item.Ad @item.Soyad</td>
-                <td>@(item.Email ?? "-")</td>
-                <td>@(item.Telefon ?? "-")</td>
-                <td>@(item.SporSalonu?.Ad ?? "-")</td>
-                <td>@(item.UzmanlikAlanlari ?? "-")</td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Detay</a>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Düzenle</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Sil</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-
-
-
-
-
-
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
-=======
 @if (!Model.Any())
 {
     <div class="alert alert-info d-flex align-items-center">
@@ -127,4 +85,3 @@ else
         </table>
     </div>
 }
->>>>>>> fcae538b27ebfb1a5eb911e74d3c6efdc7ee7737

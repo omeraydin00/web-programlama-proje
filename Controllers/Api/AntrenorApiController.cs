@@ -131,7 +131,3 @@ public class AntrenorApiController : ControllerBase
 
 
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes

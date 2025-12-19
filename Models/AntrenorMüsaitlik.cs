@@ -22,7 +22,3 @@ public class AntrenorMüsaitlik
 
 
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes

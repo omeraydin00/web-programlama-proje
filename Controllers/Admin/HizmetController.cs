@@ -176,7 +176,3 @@ public class HizmetController : Controller
 
 
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes

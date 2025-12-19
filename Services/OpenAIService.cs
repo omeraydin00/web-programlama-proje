@@ -113,7 +113,3 @@ public class OpenAIService
 
 
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes

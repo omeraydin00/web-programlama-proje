@@ -45,7 +45,3 @@ public class RegisterViewModel
 
 
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
