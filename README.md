@@ -77,6 +77,9 @@ Bulut tabanlı API’ler yerine **Ollama** kullanılarak, yapay zekâ özellikle
 - **Bootstrap 5** (Frontend framework)
 - **jQuery & jQuery Validation** (Client-side validation)
 - **Ollama** (Local yapay zeka entegrasyonu)
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 ## Kurulum
@@ -93,6 +96,9 @@ Bulut tabanlı API’ler yerine **Ollama** kullanılarak, yapay zekâ özellikle
 - SQLite (Projede dahil)
 - Visual Studio 2022 veya VS Code
 - Ollama (Yapay zeka özellikleri için - isteğe bağlı)
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 ### Ollama Kurulumu
