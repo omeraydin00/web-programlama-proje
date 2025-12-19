@@ -18,6 +18,12 @@ public class EgzersizOnerisiViewModel
     [Display(Name = "Hedef")]
     [StringLength(500)]
     public string? Hedef { get; set; }
+
+    [Display(Name = "Fotoğraf (Opsiyonel)")]
+    public IFormFile? Foto { get; set; }
+
+    [Display(Name = "Egzersiz Sonrası Görünüm Resmi İste")]
+    public bool GorselSonucIste { get; set; } = false;
 }
 
 

@@ -8,12 +8,12 @@ namespace SporSalonuYonetim.Controllers;
 [Authorize]
 public class AIEgzersizController : Controller
 {
-    private readonly OpenAIService _openAIService;
+    private readonly OllamaService _ollamaService;
     private readonly ILogger<AIEgzersizController> _logger;
 
-    public AIEgzersizController(OpenAIService openAIService, ILogger<AIEgzersizController> logger)
+    public AIEgzersizController(OllamaService ollamaService, ILogger<AIEgzersizController> logger)
     {
-        _openAIService = openAIService;
+        _ollamaService = ollamaService;
         _logger = logger;
     }
 
@@ -35,13 +35,38 @@ public class AIEgzersizController : Controller
 
         try
         {
-            var recommendation = await _openAIService.GetExerciseRecommendationAsync(
+            string? fotoYolu = null;
+
+            // Fotoğraf yükleme işlemi
+            if (model.Foto != null && model.Foto.Length > 0)
+            {
+                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "fotolar");
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Foto.FileName;
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await model.Foto.CopyToAsync(fileStream);
+                }
+
+                fotoYolu = $"/uploads/fotolar/{uniqueFileName}";
+                ViewBag.FotoYolu = fotoYolu;
+            }
+
+            var recommendation = await _ollamaService.GetExerciseRecommendationAsync(
                 model.VucutTipi,
                 model.Boy,
                 model.Kilo,
-                model.Hedef);
+                model.Hedef,
+                model.GorselSonucIste);
 
             ViewBag.Recommendation = recommendation;
+            ViewBag.GorselSonucIste = model.GorselSonucIste;
             return View("Index", model);
         }
         catch (Exception ex)

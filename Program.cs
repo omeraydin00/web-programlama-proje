@@ -41,9 +41,9 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = "/Account/AccessDenied";
 });
 
-// OpenAI Service
-builder.Services.AddHttpClient<OpenAIService>();
-builder.Services.AddScoped<OpenAIService>();
+// Ollama Service (Local AI)
+builder.Services.AddHttpClient<OllamaService>();
+builder.Services.AddScoped<OllamaService>();
 
 var app = builder.Build();
 

@@ -12,6 +12,7 @@ Bulut tabanlı API’ler yerine **Ollama** kullanılarak, yapay zekâ özellikle
 
 ### ✅ Tamamlanan Özellikler
 
+<<<<<<< Updated upstream
 * **Spor Salonu Yönetimi**: Spor salonlarının tanımlanması, çalışma saatleri ve hizmet türleri
 * **Antrenör Yönetimi**: Antrenörlerin uzmanlık alanları ve müsaitlik saatleri
 * **Hizmet Yönetimi**: Hizmet türleri, süre ve ücret bilgileri
@@ -47,15 +48,52 @@ Bulut tabanlı API’ler yerine **Ollama** kullanılarak, yapay zekâ özellikle
 * **Bootstrap 5** (Frontend framework)
 * **jQuery & jQuery Validation** (Client-side validation)
 * **Ollama** (Yerel yapay zekâ / LLM entegrasyonu)
+=======
+- **Spor Salonu Yönetimi**: Spor salonlarının tanımlanması, çalışma saatleri ve hizmet türleri
+- **Antrenör Yönetimi**: Antrenörlerin uzmanlık alanları ve müsaitlik saatleri
+- **Hizmet Yönetimi**: Hizmet türleri, süre ve ücret bilgileri
+- **Randevu Sistemi**: 
+  - Randevu alma (müsaitlik ve çakışma kontrolü)
+  - Randevu onaylama/reddetme (Admin)
+  - Randevu durum takibi
+- **Kullanıcı Yönetimi**: 
+  - Kullanıcı kayıt/giriş
+  - Rol bazlı yetkilendirme (Admin, Üye)
+  - Profil yönetimi
+- **REST API**: 
+  - Antrenör sorgulama ve filtreleme (LINQ)
+  - Randevu sorgulama ve filtreleme
+- **Yapay Zeka Entegrasyonu**: Ollama ile local yapay zeka tabanlı kişiselleştirilmiş egzersiz önerileri
+- **Admin Paneli**: Tüm CRUD işlemleri için yönetim paneli
+- **Veri Doğrulama**: Client-side ve server-side validation
+
+## Kullanılan Teknolojiler
+
+- **ASP.NET Core MVC 8.0** (LTS)
+- **C#**
+- **SQL Server** (LocalDB)
+- **Entity Framework Core 8.0**
+- **ASP.NET Core Identity** (Kimlik doğrulama ve yetkilendirme)
+- **Bootstrap 5** (Frontend framework)
+- **jQuery & jQuery Validation** (Client-side validation)
+- **Ollama** (Local yapay zeka entegrasyonu)
+>>>>>>> Stashed changes
 
 ## Kurulum
 
 ### Gereksinimler
 
+<<<<<<< Updated upstream
 * .NET 8.0 SDK
 * SQL Server (LocalDB veya SQL Server Express)
 * Visual Studio 2022 veya VS Code
 * **Ollama (Local LLM Runtime)**
+=======
+- .NET 8.0 SDK
+- SQLite (Projede dahil)
+- Visual Studio 2022 veya VS Code
+- Ollama (Yapay zeka özellikleri için - isteğe bağlı)
+>>>>>>> Stashed changes
 
 ### Ollama Kurulumu
 
@@ -74,10 +112,29 @@ Bulut tabanlı API’ler yerine **Ollama** kullanılarak, yapay zekâ özellikle
 ### Proje Kurulumu
 
 1. Projeyi klonlayın veya indirin
+<<<<<<< Updated upstream
 2. `appsettings.json` dosyasında veritabanı bağlantı string’ini kontrol edin
 3. **Ollama için ekstra API key gerekmez**
 4. Migration’ları oluşturun ve uygulayın:
 
+=======
+2. `appsettings.json` dosyasında veritabanı bağlantı string'ini kontrol edin
+3. Ollama'yı kurun ve yapılandırın (AI özellikleri için):
+   - Ollama'yı indirin: https://ollama.com
+   - Terminal'de model indirin:
+     ```bash
+     ollama pull llama3.2
+     ```
+   - Ollama'nın çalıştığından emin olun (varsayılan: http://localhost:11434)
+   - `appsettings.json` dosyasında Ollama ayarlarını kontrol edin:
+     ```json
+     "Ollama": {
+       "BaseUrl": "http://localhost:11434",
+       "Model": "llama3.2"
+     }
+     ```
+4. Migration'ları oluşturun ve uygulayın:
+>>>>>>> Stashed changes
    ```bash
    dotnet ef migrations add InitialCreate
    dotnet ef database update
@@ -87,6 +144,8 @@ Bulut tabanlı API’ler yerine **Ollama** kullanılarak, yapay zekâ özellikle
    ```bash
    dotnet run
    ```
+
+**Not:** Ollama kurulu değilse, AI egzersiz önerileri özelliği çalışmayacaktır. Diğer tüm özellikler normal çalışır.
 
 ## Kullanım
 

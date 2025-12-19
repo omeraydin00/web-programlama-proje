@@ -9,7 +9,7 @@
 
 <div class="row">
     <div class="col-md-6">
-        <form asp-action="GetRecommendation" method="post">
+        <form asp-action="GetRecommendation" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="mb-3">
@@ -37,12 +37,29 @@
 
             <div class="mb-3">
                 <label asp-for="Hedef" class="form-label"></label>
-                <textarea asp-for="Hedef" class="form-control" rows="3" placeholder="Örn: Kilo vermek, kas geliştirmek, genel sağlık"></textarea>
+                <textarea asp-for="Hedef" class="form-control" rows="3"
+                    placeholder="Örn: Kilo vermek, kas geliştirmek, genel sağlık"></textarea>
                 <span asp-validation-for="Hedef" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
-                <button type="submit" class="btn btn-primary">Öneri Al</button>
+                <label asp-for="Foto" class="form-label">Fotoğraf (Opsiyonel)</label>
+                <input asp-for="Foto" type="file" class="form-control" accept="image/*" />
+                <small class="form-text text-muted">Vücut fotoğrafınızı yükleyebilirsiniz (JPG, PNG)</small>
+                <span asp-validation-for="Foto" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3 form-check">
+                <input asp-for="GorselSonucIste" class="form-check-input" type="checkbox" />
+                <label asp-for="GorselSonucIste" class="form-check-label">
+                    Egzersiz sonrası nasıl görüneceğimi göster
+                </label>
+            </div>
+
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-robot me-2"></i>AI Önerisi Al
+                </button>
             </div>
         </form>
     </div>
@@ -50,20 +67,43 @@
     <div class="col-md-6">
         @if (ViewBag.Recommendation != null)
         {
-            <div class="card">
+            <div class="card shadow-sm">
                 <div class="card-header bg-primary text-white">
-                    <h5 class="mb-0">AI Önerisi</h5>
+                    <h5 class="mb-0">
+                        <i class="bi bi-robot me-2"></i>AI Önerisi
+                    </h5>
                 </div>
                 <div class="card-body">
+                    @if (ViewBag.FotoYolu != null)
+                    {
+                        <div class="mb-3 text-center">
+                            <img src="@ViewBag.FotoYolu" alt="Yüklenen Fotoğraf" class="img-fluid rounded"
+                                style="max-height: 300px;" />
+                            <p class="text-muted mt-2"><small>Yüklenen fotoğraf</small></p>
+                        </div>
+                    }
                     <div class="whitespace-pre-line">@ViewBag.Recommendation</div>
+                    @if (ViewBag.GorselSonucIste == true)
+                    {
+                        <div class="alert alert-info mt-3">
+                            <i class="bi bi-info-circle me-2"></i>
+                            <strong>Görsel Sonuç:</strong> AI, egzersiz programını takip ettikten sonra nasıl görüneceğinizi
+                            yukarıdaki öneride açıklamıştır.
+                        </div>
+                    }
                 </div>
             </div>
         }
         else
         {
             <div class="alert alert-info">
-                <h5>Nasıl Çalışır?</h5>
-                <p>Yapay zeka, girdiğiniz bilgilere göre size özel bir egzersiz programı önerir. Vücut tipi, boy, kilo ve hedeflerinize göre kişiselleştirilmiş öneriler alırsınız.</p>
+                <h5><i class="bi bi-info-circle me-2"></i>Nasıl Çalışır?</h5>
+                <p>Yapay zeka, girdiğiniz bilgilere göre size özel bir egzersiz programı önerir:</p>
+                <ul>
+                    <li>Vücut tipi, boy, kilo ve hedeflerinize göre kişiselleştirilmiş öneriler</li>
+                    <li>İsterseniz fotoğraf yükleyerek daha detaylı analiz</li>
+                    <li>Egzersiz sonrası nasıl görüneceğinizi öğrenme seçeneği</li>
+                </ul>
             </div>
         }
     </div>
@@ -76,13 +116,18 @@
 </style>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
+<<<<<<< Updated upstream
 
 
 
 
 <<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
