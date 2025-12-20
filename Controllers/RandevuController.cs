@@ -194,7 +194,7 @@ public class RandevuController : Controller
 
         if (ModelState.IsValid)
         {
-            randevu.OlusturmaTarihi = DateTime.Now;
+            randevu.OlusturmaTarihi = DateTime.UtcNow;
             _context.Add(randevu);
             await _context.SaveChangesAsync();
             _logger.LogInformation("Yeni randevu oluşturuldu: {RandevuId}", randevu.Id);

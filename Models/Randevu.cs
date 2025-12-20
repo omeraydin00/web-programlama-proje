@@ -32,7 +32,7 @@ public class Randevu
     public string? Notlar { get; set; }
 
     [Display(Name = "Oluşturma Tarihi")]
-    public DateTime OlusturmaTarihi { get; set; } = DateTime.Now;
+    public DateTime OlusturmaTarihi { get; set; } = DateTime.UtcNow;
 
     // Foreign Keys
     public string? UyeId { get; set; }

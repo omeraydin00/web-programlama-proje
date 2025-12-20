@@ -80,7 +80,7 @@ public class AntrenorController : Controller
     {
         if (ModelState.IsValid)
         {
-            antrenor.OlusturmaTarihi = DateTime.Now;
+            antrenor.OlusturmaTarihi = DateTime.UtcNow;
             _context.Add(antrenor);
             await _context.SaveChangesAsync();
 

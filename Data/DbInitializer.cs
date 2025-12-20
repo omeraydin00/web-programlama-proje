@@ -207,12 +207,12 @@ public static class DbInitializer
                         UyeId = uyeUser.Id,
                         AntrenorId = antrenorler[0].Id,
                         HizmetId = hizmetler[0].Id, // Fitness Antrenmanı
-                        RandevuTarihi = DateTime.Today.AddDays(1), // Yarın
+                        RandevuTarihi = DateTime.UtcNow.Date.AddDays(1), // Yarın
                         BaslangicSaati = new TimeSpan(10, 0, 0),
                         BitisSaati = new TimeSpan(11, 0, 0),
                         ToplamUcret = hizmetler[0].Ucret,
                         Durum = "Beklemede",
-                        OlusturmaTarihi = DateTime.Now.AddDays(-2),
+                        OlusturmaTarihi = DateTime.UtcNow.AddDays(-2),
                         Notlar = "İlk randevu"
                     },
                     new Randevu
@@ -220,12 +220,12 @@ public static class DbInitializer
                         UyeId = uyeUser.Id,
                         AntrenorId = antrenorler.Count > 1 ? antrenorler[1].Id : antrenorler[0].Id,
                         HizmetId = hizmetler.Count > 1 ? hizmetler[1].Id : hizmetler[0].Id, // Yoga Dersi
-                        RandevuTarihi = DateTime.Today.AddDays(3), // 3 gün sonra
+                        RandevuTarihi = DateTime.UtcNow.Date.AddDays(3), // 3 gün sonra
                         BaslangicSaati = new TimeSpan(14, 0, 0),
                         BitisSaati = new TimeSpan(15, 30, 0),
                         ToplamUcret = hizmetler.Count > 1 ? hizmetler[1].Ucret : hizmetler[0].Ucret,
                         Durum = "Onaylandı",
-                        OlusturmaTarihi = DateTime.Now.AddDays(-5),
+                        OlusturmaTarihi = DateTime.UtcNow.AddDays(-5),
                         Notlar = "Yoga dersi randevusu"
                     },
                     new Randevu
@@ -233,12 +233,12 @@ public static class DbInitializer
                         UyeId = uyeUser.Id,
                         AntrenorId = antrenorler[0].Id,
                         HizmetId = hizmetler.Count > 2 ? hizmetler[2].Id : hizmetler[0].Id, // Pilates Dersi
-                        RandevuTarihi = DateTime.Today.AddDays(-2), // 2 gün önce
+                        RandevuTarihi = DateTime.UtcNow.Date.AddDays(-2), // 2 gün önce
                         BaslangicSaati = new TimeSpan(11, 0, 0),
                         BitisSaati = new TimeSpan(12, 0, 0),
                         ToplamUcret = hizmetler.Count > 2 ? hizmetler[2].Ucret : hizmetler[0].Ucret,
                         Durum = "Tamamlandı",
-                        OlusturmaTarihi = DateTime.Now.AddDays(-10),
+                        OlusturmaTarihi = DateTime.UtcNow.AddDays(-10),
                         Notlar = "Tamamlanmış pilates dersi"
                     }
                 };

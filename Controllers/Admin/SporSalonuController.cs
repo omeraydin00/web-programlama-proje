@@ -23,7 +23,7 @@ public class SporSalonuController : Controller
     {
         try
         {
-        var sporSalonlari = await _context.SporSalonlari.ToListAsync();
+            var sporSalonlari = await _context.SporSalonlari.ToListAsync();
             return View("~/Views/Admin/SporSalonu/Index.cshtml", sporSalonlari);
         }
         catch (Exception ex)
@@ -67,7 +67,7 @@ public class SporSalonuController : Controller
     {
         if (ModelState.IsValid)
         {
-            sporSalonu.OlusturmaTarihi = DateTime.Now;
+            sporSalonu.OlusturmaTarihi = DateTime.UtcNow;
             _context.Add(sporSalonu);
             await _context.SaveChangesAsync();
             _logger.LogInformation("Yeni spor salonu eklendi: {Ad}", sporSalonu.Ad);

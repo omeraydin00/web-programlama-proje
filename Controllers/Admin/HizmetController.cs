@@ -74,7 +74,7 @@ public class HizmetController : Controller
     {
         if (ModelState.IsValid)
         {
-            hizmet.OlusturmaTarihi = DateTime.Now;
+            hizmet.OlusturmaTarihi = DateTime.UtcNow;
             _context.Add(hizmet);
             await _context.SaveChangesAsync();
             _logger.LogInformation("Yeni hizmet eklendi: {Ad}", hizmet.Ad);
