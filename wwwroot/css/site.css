@@ -171,13 +171,14 @@ body {
 /* Footer */
 .custom-footer {
     background: var(--dark-gradient);
-    color: rgba(255, 255, 255, 0.8);
+    color: white;
     margin-top: 3rem;
     box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .custom-footer p {
     margin: 0;
+    color: white;
 }
 
 /* Page Headers */
