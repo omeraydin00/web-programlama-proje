@@ -217,7 +217,6 @@
 /Users/omer/Documents/GitHub/web-programlama-proje/obj/Debug/net10.0/rjsmrazor.dswa.cache.json
 /Users/omer/Documents/GitHub/web-programlama-proje/obj/Debug/net10.0/rjsmcshtml.dswa.cache.json
 /Users/omer/Documents/GitHub/web-programlama-proje/obj/Debug/net10.0/scopedcss/bundle/SporSalonuYonetim.styles.css
-/Users/omer/Documents/GitHub/web-programlama-proje/obj/Debug/net10.0/compressed/642dzvxwow-{0}-bncv4efx5o-bncv4efx5o.gz
 /Users/omer/Documents/GitHub/web-programlama-proje/obj/Debug/net10.0/compressed/ly4q779i3r-{0}-gjxjqgh8ch-gjxjqgh8ch.gz
 /Users/omer/Documents/GitHub/web-programlama-proje/obj/Debug/net10.0/staticwebassets.build.json
 /Users/omer/Documents/GitHub/web-programlama-proje/obj/Debug/net10.0/staticwebassets.build.json.cache
@@ -232,3 +231,4 @@
 /Users/omer/Documents/GitHub/web-programlama-proje/obj/Debug/net10.0/ref/SporSalonuYonetim.dll
 /Users/omer/Documents/GitHub/web-programlama-proje/bin/Debug/net10.0/Npgsql.dll
 /Users/omer/Documents/GitHub/web-programlama-proje/bin/Debug/net10.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll
+/Users/omer/Documents/GitHub/web-programlama-proje/obj/Debug/net10.0/compressed/642dzvxwow-{0}-7xpu5xvyw8-7xpu5xvyw8.gz
