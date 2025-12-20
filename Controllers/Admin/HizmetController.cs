@@ -24,9 +24,9 @@ public class HizmetController : Controller
     {
         try
         {
-        var hizmetler = await _context.Hizmetler
-            .Include(h => h.SporSalonu)
-            .ToListAsync();
+            var hizmetler = await _context.Hizmetler
+                .Include(h => h.SporSalonu)
+                .ToListAsync();
             return View("~/Views/Admin/Hizmet/Index.cshtml", hizmetler);
         }
         catch (Exception ex)
@@ -57,9 +57,13 @@ public class HizmetController : Controller
     }
 
     // GET: Admin/Hizmet/Create
-    public IActionResult Create()
+    public IActionResult Create(int? sporSalonuId = null)
     {
-        ViewData["SporSalonuId"] = new SelectList(_context.SporSalonlari, "Id", "Ad");
+        ViewData["SporSalonuId"] = new SelectList(_context.SporSalonlari, "Id", "Ad", sporSalonuId);
+        if (sporSalonuId.HasValue)
+        {
+            ViewBag.SelectedSporSalonuId = sporSalonuId.Value;
+        }
         return View("~/Views/Admin/Hizmet/Create.cshtml");
     }
 
@@ -74,6 +78,13 @@ public class HizmetController : Controller
             _context.Add(hizmet);
             await _context.SaveChangesAsync();
             _logger.LogInformation("Yeni hizmet eklendi: {Ad}", hizmet.Ad);
+
+            // Eğer spor salonu detay sayfasından gelindiyse oraya dön
+            if (Request.Headers["Referer"].ToString().Contains("/Admin/SporSalonu/Details"))
+            {
+                return RedirectToAction("Details", "SporSalonu", new { id = hizmet.SporSalonuId });
+            }
+
             return RedirectToAction(nameof(Index));
         }
         ViewData["SporSalonuId"] = new SelectList(_context.SporSalonlari, "Id", "Ad", hizmet.SporSalonuId);

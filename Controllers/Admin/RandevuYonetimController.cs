@@ -34,10 +34,13 @@ public class RandevuYonetimController : Controller
                 query = query.Where(r => r.Durum == durum);
             }
 
-            var randevular = await query
+            // SQLite TimeSpan ORDER BY desteklemediği için önce veritabanından çekip sonra memory'de sıralıyoruz
+            var randevular = await query.ToListAsync();
+
+            randevular = randevular
                 .OrderByDescending(r => r.RandevuTarihi)
                 .ThenByDescending(r => r.BaslangicSaati)
-                .ToListAsync();
+                .ToList();
 
             ViewBag.Durum = durum;
             return View("~/Views/Admin/RandevuYonetim/Index.cshtml", randevular);

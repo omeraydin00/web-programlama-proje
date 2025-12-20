@@ -10,27 +10,28 @@
     <div class="col-md-6">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
-            <div class="mb-3">
-                <label asp-for="HizmetId" class="form-label">Hizmet</label>
-                <select asp-for="HizmetId" class="form-select" asp-items="ViewBag.HizmetId" id="hizmetSelect">
-                    <option value="">-- Hizmet Seçin --</option>
-                </select>
-                <span asp-validation-for="HizmetId" class="text-danger"></span>
-            </div>
 
             <div class="mb-3">
                 <label asp-for="AntrenorId" class="form-label">Antrenör</label>
                 <select asp-for="AntrenorId" class="form-select" asp-items="ViewBag.AntrenorId" id="antrenorSelect">
-                    <option value="">-- Antrenör Seçin --</option>
+                    <option value="">-- Önce Antrenör Seçin --</option>
                 </select>
                 <span asp-validation-for="AntrenorId" class="text-danger"></span>
+                <small class="form-text text-muted">Antrenör seçtikten sonra hizmetler filtrelenecektir.</small>
             </div>
-            
+
+            <div class="mb-3">
+                <label asp-for="HizmetId" class="form-label">Hizmet</label>
+                <select asp-for="HizmetId" class="form-select" id="hizmetSelect" disabled>
+                    <option value="">-- Önce Antrenör Seçin --</option>
+                </select>
+                <span asp-validation-for="HizmetId" class="text-danger"></span>
+            </div>
+
             @if (ViewBag.SelectedAntrenorId != null)
             {
                 <script>
-                    document.addEventListener('DOMContentLoaded', function() {
+                    document.addEventListener('DOMContentLoaded', function () {
                         document.getElementById('antrenorSelect').value = '@ViewBag.SelectedAntrenorId';
                     });
                 </script>
@@ -38,7 +39,8 @@
 
             <div class="mb-3">
                 <label asp-for="RandevuTarihi" class="form-label">Randevu Tarihi</label>
-                <input asp-for="RandevuTarihi" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                <input asp-for="RandevuTarihi" class="form-control" type="date"
+                    min="@DateTime.Now.ToString("yyyy-MM-dd")" />
                 <span asp-validation-for="RandevuTarihi" class="text-danger"></span>
             </div>
 
@@ -63,7 +65,61 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const antrenorSelect = document.getElementById('antrenorSelect');
+            const hizmetSelect = document.getElementById('hizmetSelect');
+
+            // Antrenör seçildiğinde
+            antrenorSelect.addEventListener('change', async function () {
+                const antrenorId = this.value;
+
+                if (!antrenorId) {
+                    hizmetSelect.innerHTML = '<option value="">-- Önce Antrenör Seçin --</option>';
+                    hizmetSelect.disabled = true;
+                    return;
+                }
+
+                // Antrenörün spor salonunu al
+                try {
+                    const response = await fetch(`/api/AntrenorApi/GetSporSalonuId/${antrenorId}`);
+                    if (response.ok) {
+                        const sporSalonuId = await response.json();
+
+                        // Hizmetleri filtrele
+                        hizmetSelect.innerHTML = '<option value="">-- Hizmet Seçin --</option>';
+                        hizmetSelect.disabled = false;
+
+                        // Tüm hizmetleri yükle ve filtrele
+                        const hizmetResponse = await fetch(`/api/AntrenorApi/GetHizmetlerBySporSalonu/${sporSalonuId}`);
+                        if (hizmetResponse.ok) {
+                            const filteredHizmetler = await hizmetResponse.json();
+
+                            filteredHizmetler.forEach(hizmet => {
+                                const option = document.createElement('option');
+                                option.value = hizmet.id;
+                                option.textContent = hizmet.ad;
+                                hizmetSelect.appendChild(option);
+                            });
+                        }
+                    }
+                } catch (error) {
+                    console.error('Hata:', error);
+                    hizmetSelect.innerHTML = '<option value="">Hizmetler yüklenirken hata oluştu</option>';
+                }
+            });
+
+            // Sayfa yüklendiğinde eğer antrenör seçilmişse
+            @if (ViewBag.SelectedAntrenorId != null)
+                {
+                    <text>
+                        antrenorSelect.value = '@ViewBag.SelectedAntrenorId';
+                        antrenorSelect.dispatchEvent(new Event('change'));
+                    </text>
+            }
+            });
+    </script>
 }
-
-

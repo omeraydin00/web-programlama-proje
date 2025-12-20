@@ -23,7 +23,7 @@ public static class DbInitializer
         await SeedAdminUserAsync(userManager);
 
         // Örnek verileri ekle
-        await SeedSampleDataAsync(context);
+        await SeedSampleDataAsync(context, userManager);
     }
 
     private static async Task SeedRolesAsync(RoleManager<IdentityRole> roleManager)
@@ -65,7 +65,7 @@ public static class DbInitializer
         }
     }
 
-    private static async Task SeedSampleDataAsync(ApplicationDbContext context)
+    private static async Task SeedSampleDataAsync(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
     {
         // Örnek spor salonu ekle
         if (!context.SporSalonlari.Any())
@@ -170,12 +170,84 @@ public static class DbInitializer
             context.AntrenorMüsaitlikler.AddRange(musaitlikler);
             await context.SaveChangesAsync();
         }
+
+        // Örnek üye kullanıcısı oluştur (randevular için)
+        string uyeEmail = "uye@sakarya.edu.tr";
+        var uyeUser = await userManager.FindByEmailAsync(uyeEmail);
+
+        if (uyeUser == null)
+        {
+            uyeUser = new ApplicationUser
+            {
+                UserName = uyeEmail,
+                Email = uyeEmail,
+                EmailConfirmed = true,
+                Ad = "Test",
+                Soyad = "Üye"
+            };
+            var result = await userManager.CreateAsync(uyeUser, "sau");
+            if (result.Succeeded)
+            {
+                await userManager.AddToRoleAsync(uyeUser, "Üye");
+            }
+        }
+
+        // Örnek randevular ekle
+        if (!context.Randevular.Any() && uyeUser != null && context.Antrenorler.Any() && context.Hizmetler.Any())
+        {
+            var antrenorler = await context.Antrenorler.ToListAsync();
+            var hizmetler = await context.Hizmetler.ToListAsync();
+
+            if (antrenorler.Any() && hizmetler.Any())
+            {
+                var randevular = new List<Randevu>
+                {
+                    new Randevu
+                    {
+                        UyeId = uyeUser.Id,
+                        AntrenorId = antrenorler[0].Id,
+                        HizmetId = hizmetler[0].Id, // Fitness Antrenmanı
+                        RandevuTarihi = DateTime.Today.AddDays(1), // Yarın
+                        BaslangicSaati = new TimeSpan(10, 0, 0),
+                        BitisSaati = new TimeSpan(11, 0, 0),
+                        ToplamUcret = hizmetler[0].Ucret,
+                        Durum = "Beklemede",
+                        OlusturmaTarihi = DateTime.Now.AddDays(-2),
+                        Notlar = "İlk randevu"
+                    },
+                    new Randevu
+                    {
+                        UyeId = uyeUser.Id,
+                        AntrenorId = antrenorler.Count > 1 ? antrenorler[1].Id : antrenorler[0].Id,
+                        HizmetId = hizmetler.Count > 1 ? hizmetler[1].Id : hizmetler[0].Id, // Yoga Dersi
+                        RandevuTarihi = DateTime.Today.AddDays(3), // 3 gün sonra
+                        BaslangicSaati = new TimeSpan(14, 0, 0),
+                        BitisSaati = new TimeSpan(15, 30, 0),
+                        ToplamUcret = hizmetler.Count > 1 ? hizmetler[1].Ucret : hizmetler[0].Ucret,
+                        Durum = "Onaylandı",
+                        OlusturmaTarihi = DateTime.Now.AddDays(-5),
+                        Notlar = "Yoga dersi randevusu"
+                    },
+                    new Randevu
+                    {
+                        UyeId = uyeUser.Id,
+                        AntrenorId = antrenorler[0].Id,
+                        HizmetId = hizmetler.Count > 2 ? hizmetler[2].Id : hizmetler[0].Id, // Pilates Dersi
+                        RandevuTarihi = DateTime.Today.AddDays(-2), // 2 gün önce
+                        BaslangicSaati = new TimeSpan(11, 0, 0),
+                        BitisSaati = new TimeSpan(12, 0, 0),
+                        ToplamUcret = hizmetler.Count > 2 ? hizmetler[2].Ucret : hizmetler[0].Ucret,
+                        Durum = "Tamamlandı",
+                        OlusturmaTarihi = DateTime.Now.AddDays(-10),
+                        Notlar = "Tamamlanmış pilates dersi"
+                    }
+                };
+
+                context.Randevular.AddRange(randevular);
+                await context.SaveChangesAsync();
+            }
+        }
     }
 }
-
-
-
-
-
 
 

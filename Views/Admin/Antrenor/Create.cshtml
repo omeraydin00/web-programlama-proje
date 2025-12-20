@@ -10,7 +10,7 @@
     <div class="col-md-6">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
+
             <div class="mb-3">
                 <label asp-for="Ad" class="form-label"></label>
                 <input asp-for="Ad" class="form-control" />
@@ -45,7 +45,8 @@
 
             <div class="mb-3">
                 <label asp-for="UzmanlikAlanlari" class="form-label">Uzmanlık Alanları</label>
-                <input asp-for="UzmanlikAlanlari" class="form-control" placeholder="Örn: Kas geliştirme, Kilo verme, Yoga" />
+                <input asp-for="UzmanlikAlanlari" class="form-control"
+                    placeholder="Örn: Kas geliştirme, Kilo verme, Yoga" />
                 <span asp-validation-for="UzmanlikAlanlari" class="text-danger"></span>
             </div>
 
@@ -53,6 +54,58 @@
                 <label asp-for="Aciklama" class="form-label"></label>
                 <textarea asp-for="Aciklama" class="form-control" rows="3"></textarea>
                 <span asp-validation-for="Aciklama" class="text-danger"></span>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label fw-bold">Müsaitlik Günleri</label>
+                <p class="text-muted small">Antrenörün hangi günlerde müsait olduğunu ve saatlerini belirleyin.</p>
+
+                @{
+                    var gunler = new[] {
+                                ("Pazartesi", DayOfWeek.Monday),
+                                ("Salı", DayOfWeek.Tuesday),
+                                ("Çarşamba", DayOfWeek.Wednesday),
+                                ("Perşembe", DayOfWeek.Thursday),
+                                ("Cuma", DayOfWeek.Friday),
+                                ("Cumartesi", DayOfWeek.Saturday),
+                                ("Pazar", DayOfWeek.Sunday)
+                                };
+                }
+
+                <div class="row g-3">
+                    @foreach (var (gunAdi, gun) in gunler)
+                    {
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input musaitlik-checkbox" type="checkbox"
+                                            name="MusaitlikGunleri" value="@((int)gun)" id="gun_@((int)gun)" />
+                                        <label class="form-check-label fw-semibold" for="gun_@((int)gun)">
+                                            @gunAdi
+                                        </label>
+                                    </div>
+                                    <div class="musaitlik-saatleri" style="display: none;">
+                                        <div class="row g-2">
+                                            <div class="col-6">
+                                                <label class="form-label small">Başlangıç</label>
+                                                <input type="time" class="form-control form-control-sm baslangic-saati"
+                                                    name="BaslangicSaati_@((int)gun)" id="baslangic_@((int)gun)"
+                                                    data-gun="@((int)gun)" />
+                                            </div>
+                                            <div class="col-6">
+                                                <label class="form-label small">Bitiş</label>
+                                                <input type="time" class="form-control form-control-sm bitis-saati"
+                                                    name="BitisSaati_@((int)gun)" id="bitis_@((int)gun)"
+                                                    data-gun="@((int)gun)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
             </div>
 
             <div class="mb-3">
@@ -64,12 +117,41 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const checkboxes = document.querySelectorAll('.musaitlik-checkbox');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function () {
+                    const saatleriDiv = this.closest('.card').querySelector('.musaitlik-saatleri');
+                    if (this.checked) {
+                        saatleriDiv.style.display = 'block';
+                    } else {
+                        saatleriDiv.style.display = 'none';
+                        // Saatleri temizle
+                        saatleriDiv.querySelectorAll('input[type="time"]').forEach(input => input.value = '');
+                    }
+                });
+            });
+
+            // Form submit edilmeden önce hidden input'lar ekle
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function (e) {
+                // Önce mevcut hidden input'ları temizle
+                document.querySelectorAll('input[type="hidden"][name^="MusaitlikGunleri"]').forEach(el => el.remove());
+
+                checkboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        const hiddenInput = document.createElement('input');
+                        hiddenInput.type = 'hidden';
+                        hiddenInput.name = 'MusaitlikGunleri';
+                        hiddenInput.value = checkbox.value;
+                        form.appendChild(hiddenInput);
+                    }
+                });
+            });
+        });
+    </script>
 }
-
-
-
-
-
-
-

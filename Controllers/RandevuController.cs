@@ -36,13 +36,17 @@ public class RandevuController : Controller
                 return NotFound();
             }
 
+            // SQLite TimeSpan ORDER BY desteklemediği için önce veritabanından çekip sonra memory'de sıralıyoruz
             var randevular = await _context.Randevular
                 .Include(r => r.Antrenor)
                 .Include(r => r.Hizmet)
                 .Where(r => r.UyeId == user.Id)
+                .ToListAsync();
+
+            randevular = randevular
                 .OrderByDescending(r => r.RandevuTarihi)
                 .ThenByDescending(r => r.BaslangicSaati)
-                .ToListAsync();
+                .ToList();
 
             return View(randevular);
         }
@@ -61,11 +65,32 @@ public class RandevuController : Controller
             .ToListAsync();
 
         ViewData["AntrenorId"] = new SelectList(antrenorler, "Id", "Ad", antrenorId);
-        ViewData["HizmetId"] = new SelectList(_context.Hizmetler, "Id", "Ad");
 
+        // Eğer antrenör seçilmişse, sadece o antrenörün spor salonundaki hizmetleri göster
         if (antrenorId.HasValue)
         {
+            var antrenor = await _context.Antrenorler
+                .FirstOrDefaultAsync(a => a.Id == antrenorId.Value);
+
+            if (antrenor != null)
+            {
+                var hizmetler = await _context.Hizmetler
+                    .Where(h => h.SporSalonuId == antrenor.SporSalonuId)
+                    .Select(h => new { h.Id, h.Ad })
+                    .ToListAsync();
+
+                ViewData["HizmetId"] = new SelectList(hizmetler, "Id", "Ad");
+            }
+            else
+            {
+                ViewData["HizmetId"] = new SelectList(new List<object>(), "Id", "Ad");
+            }
+
             ViewBag.SelectedAntrenorId = antrenorId.Value;
+        }
+        else
+        {
+            ViewData["HizmetId"] = new SelectList(_context.Hizmetler, "Id", "Ad");
         }
 
         return View();
@@ -82,11 +107,37 @@ public class RandevuController : Controller
             return NotFound();
         }
 
+        // Antrenör bilgilerini al
+        var antrenor = await _context.Antrenorler
+            .Include(a => a.Müsaitlikler)
+            .Include(a => a.SporSalonu)
+            .FirstOrDefaultAsync(a => a.Id == randevu.AntrenorId);
+
+        if (antrenor == null)
+        {
+            ModelState.AddModelError("", "Seçilen antrenör bulunamadı.");
+            ViewData["AntrenorId"] = new SelectList(_context.Antrenorler, "Id", "Ad", randevu.AntrenorId);
+            ViewData["HizmetId"] = new SelectList(_context.Hizmetler, "Id", "Ad", randevu.HizmetId);
+            return View(randevu);
+        }
+
         // Hizmet bilgilerini al
-        var hizmet = await _context.Hizmetler.FindAsync(randevu.HizmetId);
+        var hizmet = await _context.Hizmetler
+            .Include(h => h.SporSalonu)
+            .FirstOrDefaultAsync(h => h.Id == randevu.HizmetId);
+
         if (hizmet == null)
         {
             ModelState.AddModelError("", "Seçilen hizmet bulunamadı.");
+            ViewData["AntrenorId"] = new SelectList(_context.Antrenorler, "Id", "Ad", randevu.AntrenorId);
+            ViewData["HizmetId"] = new SelectList(_context.Hizmetler, "Id", "Ad", randevu.HizmetId);
+            return View(randevu);
+        }
+
+        // Hizmet ve antrenörün aynı spor salonuna ait olup olmadığını kontrol et
+        if (hizmet.SporSalonuId != antrenor.SporSalonuId)
+        {
+            ModelState.AddModelError("", "Seçilen hizmet, antrenörün çalıştığı spor salonuna ait değil. Lütfen antrenörün spor salonuna ait bir hizmet seçin.");
             ViewData["AntrenorId"] = new SelectList(_context.Antrenorler, "Id", "Ad", randevu.AntrenorId);
             ViewData["HizmetId"] = new SelectList(_context.Hizmetler, "Id", "Ad", randevu.HizmetId);
             return View(randevu);
@@ -97,19 +148,6 @@ public class RandevuController : Controller
         randevu.ToplamUcret = hizmet.Ucret;
         randevu.UyeId = user.Id;
         randevu.Durum = "Beklemede";
-
-        // Müsaitlik kontrolü
-        var antrenor = await _context.Antrenorler
-            .Include(a => a.Müsaitlikler)
-            .FirstOrDefaultAsync(a => a.Id == randevu.AntrenorId);
-
-        if (antrenor == null)
-        {
-            ModelState.AddModelError("", "Seçilen antrenör bulunamadı.");
-            ViewData["AntrenorId"] = new SelectList(_context.Antrenorler, "Id", "Ad", randevu.AntrenorId);
-            ViewData["HizmetId"] = new SelectList(_context.Hizmetler, "Id", "Ad", randevu.HizmetId);
-            return View(randevu);
-        }
 
         // Antrenörün o gün müsait olup olmadığını kontrol et
         var randevuGunu = randevu.RandevuTarihi.DayOfWeek;

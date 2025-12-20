@@ -45,11 +45,20 @@
 
             <div class="mb-3">
                 <label asp-for="SporSalonuId" class="form-label">Spor Salonu</label>
-                <select asp-for="SporSalonuId" class="form-select" asp-items="ViewBag.SporSalonuId">
+                <select asp-for="SporSalonuId" class="form-select" asp-items="ViewBag.SporSalonuId" id="sporSalonuSelect">
                     <option value="">-- Spor Salonu Seçin --</option>
                 </select>
                 <span asp-validation-for="SporSalonuId" class="text-danger"></span>
             </div>
+            
+            @if (ViewBag.SelectedSporSalonuId != null)
+            {
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        document.getElementById('sporSalonuSelect').value = '@ViewBag.SelectedSporSalonuId';
+                    });
+                </script>
+            }
 
             <div class="mb-3">
                 <button type="submit" class="btn btn-primary">Kaydet</button>

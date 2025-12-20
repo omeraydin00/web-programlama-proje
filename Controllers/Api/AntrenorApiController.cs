@@ -132,6 +132,33 @@ public class AntrenorApiController : ControllerBase
 
         return Ok(result);
     }
+
+    // GET: api/AntrenorApi/GetSporSalonuId/5
+    [HttpGet("GetSporSalonuId/{id}")]
+    public async Task<ActionResult<int>> GetSporSalonuId(int id)
+    {
+        var antrenor = await _context.Antrenorler
+            .FirstOrDefaultAsync(a => a.Id == id);
+
+        if (antrenor == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(antrenor.SporSalonuId);
+    }
+
+    // GET: api/AntrenorApi/GetHizmetlerBySporSalonu/5
+    [HttpGet("GetHizmetlerBySporSalonu/{sporSalonuId}")]
+    public async Task<ActionResult<IEnumerable<object>>> GetHizmetlerBySporSalonu(int sporSalonuId)
+    {
+        var hizmetler = await _context.Hizmetler
+            .Where(h => h.SporSalonuId == sporSalonuId)
+            .Select(h => new { id = h.Id, ad = h.Ad })
+            .ToListAsync();
+
+        return Ok(hizmetler);
+    }
 }
 
 

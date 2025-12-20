@@ -24,9 +24,9 @@ public class AntrenorController : Controller
     {
         try
         {
-        var antrenorler = await _context.Antrenorler
-            .Include(a => a.SporSalonu)
-            .ToListAsync();
+            var antrenorler = await _context.Antrenorler
+                .Include(a => a.SporSalonu)
+                .ToListAsync();
             return View("~/Views/Admin/Antrenor/Index.cshtml", antrenorler);
         }
         catch (Exception ex)
@@ -36,7 +36,15 @@ public class AntrenorController : Controller
         }
     }
 
+    // GET: Admin/Antrenor/PublicList - Index'e yönlendir
+    [Route("Admin/Antrenor/PublicList")]
+    public IActionResult PublicList()
+    {
+        return RedirectToAction(nameof(Index));
+    }
+
     // GET: Admin/Antrenor/Details/5
+    [Route("Admin/Antrenor/Details/{id}")]
     public async Task<IActionResult> Details(int? id)
     {
         if (id == null)
@@ -68,13 +76,55 @@ public class AntrenorController : Controller
     // POST: Admin/Antrenor/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Ad,Soyad,Email,Telefon,UzmanlikAlanlari,Aciklama,SporSalonuId")] Antrenor antrenor)
+    public async Task<IActionResult> Create([Bind("Ad,Soyad,Email,Telefon,UzmanlikAlanlari,Aciklama,SporSalonuId")] Antrenor antrenor, IFormCollection form)
     {
         if (ModelState.IsValid)
         {
             antrenor.OlusturmaTarihi = DateTime.Now;
             _context.Add(antrenor);
             await _context.SaveChangesAsync();
+
+            // Müsaitlik günlerini ekle
+            var musaitlikGunleri = form["MusaitlikGunleri"].ToArray();
+            var musaitlikler = new List<AntrenorMüsaitlik>();
+
+            foreach (var gunStr in musaitlikGunleri)
+            {
+                if (int.TryParse(gunStr, out int gunDegeri))
+                {
+                    var gun = (DayOfWeek)gunDegeri;
+                    var baslangicKey = $"BaslangicSaati_{gunDegeri}";
+                    var bitisKey = $"BitisSaati_{gunDegeri}";
+
+                    if (form.ContainsKey(baslangicKey) && form.ContainsKey(bitisKey))
+                    {
+                        var baslangicStr = form[baslangicKey].ToString();
+                        var bitisStr = form[bitisKey].ToString();
+
+                        if (!string.IsNullOrEmpty(baslangicStr) && !string.IsNullOrEmpty(bitisStr))
+                        {
+                            if (TimeSpan.TryParse(baslangicStr, out TimeSpan baslangic) &&
+                                TimeSpan.TryParse(bitisStr, out TimeSpan bitis))
+                            {
+                                musaitlikler.Add(new AntrenorMüsaitlik
+                                {
+                                    AntrenorId = antrenor.Id,
+                                    HaftaninGunu = gun,
+                                    BaslangicSaati = baslangic,
+                                    BitisSaati = bitis
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (musaitlikler.Any())
+            {
+                _context.AntrenorMüsaitlikler.AddRange(musaitlikler);
+                await _context.SaveChangesAsync();
+            }
+
             _logger.LogInformation("Yeni antrenör eklendi: {Ad} {Soyad}", antrenor.Ad, antrenor.Soyad);
             return RedirectToAction(nameof(Index));
         }
@@ -90,7 +140,10 @@ public class AntrenorController : Controller
             return NotFound();
         }
 
-        var antrenor = await _context.Antrenorler.FindAsync(id);
+        var antrenor = await _context.Antrenorler
+            .Include(a => a.Müsaitlikler)
+            .FirstOrDefaultAsync(a => a.Id == id);
+
         if (antrenor == null)
         {
             return NotFound();
@@ -102,7 +155,7 @@ public class AntrenorController : Controller
     // POST: Admin/Antrenor/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Id,Ad,Soyad,Email,Telefon,UzmanlikAlanlari,Aciklama,SporSalonuId,OlusturmaTarihi")] Antrenor antrenor)
+    public async Task<IActionResult> Edit(int id, [Bind("Id,Ad,Soyad,Email,Telefon,UzmanlikAlanlari,Aciklama,SporSalonuId,OlusturmaTarihi")] Antrenor antrenor, IFormCollection form)
     {
         if (id != antrenor.Id)
         {
@@ -114,6 +167,54 @@ public class AntrenorController : Controller
             try
             {
                 _context.Update(antrenor);
+                await _context.SaveChangesAsync();
+
+                // Mevcut müsaitlikleri sil
+                var mevcutMusaitlikler = await _context.AntrenorMüsaitlikler
+                    .Where(m => m.AntrenorId == antrenor.Id)
+                    .ToListAsync();
+                _context.AntrenorMüsaitlikler.RemoveRange(mevcutMusaitlikler);
+
+                // Yeni müsaitlik günlerini ekle
+                var musaitlikGunleri = form["MusaitlikGunleri"].ToArray();
+                var musaitlikler = new List<AntrenorMüsaitlik>();
+
+                foreach (var gunStr in musaitlikGunleri)
+                {
+                    if (int.TryParse(gunStr, out int gunDegeri))
+                    {
+                        var gun = (DayOfWeek)gunDegeri;
+                        var baslangicKey = $"BaslangicSaati_{gunDegeri}";
+                        var bitisKey = $"BitisSaati_{gunDegeri}";
+
+                        if (form.ContainsKey(baslangicKey) && form.ContainsKey(bitisKey))
+                        {
+                            var baslangicStr = form[baslangicKey].ToString();
+                            var bitisStr = form[bitisKey].ToString();
+
+                            if (!string.IsNullOrEmpty(baslangicStr) && !string.IsNullOrEmpty(bitisStr))
+                            {
+                                if (TimeSpan.TryParse(baslangicStr, out TimeSpan baslangic) &&
+                                    TimeSpan.TryParse(bitisStr, out TimeSpan bitis))
+                                {
+                                    musaitlikler.Add(new AntrenorMüsaitlik
+                                    {
+                                        AntrenorId = antrenor.Id,
+                                        HaftaninGunu = gun,
+                                        BaslangicSaati = baslangic,
+                                        BitisSaati = bitis
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (musaitlikler.Any())
+                {
+                    _context.AntrenorMüsaitlikler.AddRange(musaitlikler);
+                }
+
                 await _context.SaveChangesAsync();
                 _logger.LogInformation("Antrenör güncellendi: {Ad} {Soyad}", antrenor.Ad, antrenor.Soyad);
             }
@@ -131,6 +232,12 @@ public class AntrenorController : Controller
             return RedirectToAction(nameof(Index));
         }
         ViewData["SporSalonuId"] = new SelectList(_context.SporSalonlari, "Id", "Ad", antrenor.SporSalonuId);
+
+        // Müsaitlikleri yükle
+        antrenor.Müsaitlikler = await _context.AntrenorMüsaitlikler
+            .Where(m => m.AntrenorId == antrenor.Id)
+            .ToListAsync();
+
         return View("~/Views/Admin/Antrenor/Edit.cshtml", antrenor);
     }
 
