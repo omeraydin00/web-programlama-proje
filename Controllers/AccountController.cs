@@ -35,30 +35,48 @@ public class AccountController : Controller
     {
         if (ModelState.IsValid)
         {
-            var user = new ApplicationUser
+            try
             {
-                UserName = model.Email,
-                Email = model.Email,
-                Ad = model.Ad,
-                Soyad = model.Soyad,
-                Telefon = model.Telefon,
-                DogumTarihi = model.DogumTarihi
-            };
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    EmailConfirmed = true, // Email doğrulama gerektirmiyoruz
+                    Ad = model.Ad,
+                    Soyad = model.Soyad,
+                    Telefon = model.Telefon,
+                    // PostgreSQL için DateTime UTC olmalı
+                    DogumTarihi = model.DogumTarihi.HasValue
+                        ? DateTime.SpecifyKind(model.DogumTarihi.Value, DateTimeKind.Utc)
+                        : null
+                };
 
-            var result = await _userManager.CreateAsync(user, model.Password);
-            if (result.Succeeded)
-            {
-                // Kullanıcıya "Üye" rolünü ata
-                await _userManager.AddToRoleAsync(user, "Üye");
+                var result = await _userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    // Kullanıcıya "Üye" rolünü ata
+                    await _userManager.AddToRoleAsync(user, "Üye");
 
-                await _signInManager.SignInAsync(user, isPersistent: false);
-                _logger.LogInformation("Yeni kullanıcı kaydı: {Email}", model.Email);
-                return RedirectToAction("Index", "Home");
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    _logger.LogInformation("Yeni kullanıcı kaydı: {Email}", model.Email);
+                    return RedirectToAction("Index", "Home");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
             }
-
-            foreach (var error in result.Errors)
+            catch (Exception ex)
             {
-                ModelState.AddModelError(string.Empty, error.Description);
+                _logger.LogError(ex, "Kullanıcı kaydı sırasında hata oluştu: {Email}", model.Email);
+                ModelState.AddModelError(string.Empty, "Kayıt işlemi sırasında bir hata oluştu. Lütfen tekrar deneyin.");
+
+                // Inner exception varsa daha detaylı bilgi ver
+                if (ex.InnerException != null)
+                {
+                    _logger.LogError("Inner Exception: {Message}", ex.InnerException.Message);
+                }
             }
         }
 
@@ -163,7 +181,10 @@ public class AccountController : Controller
             user.Ad = model.Ad ?? string.Empty;
             user.Soyad = model.Soyad ?? string.Empty;
             user.Telefon = model.Telefon;
-            user.DogumTarihi = model.DogumTarihi;
+            // PostgreSQL için DateTime UTC olmalı
+            user.DogumTarihi = model.DogumTarihi.HasValue
+                ? DateTime.SpecifyKind(model.DogumTarihi.Value, DateTimeKind.Utc)
+                : null;
             user.Adres = model.Adres;
 
             var result = await _userManager.UpdateAsync(user);

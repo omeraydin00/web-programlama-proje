@@ -231,4 +231,4 @@
 /Users/omer/Documents/GitHub/web-programlama-proje/obj/Debug/net10.0/ref/SporSalonuYonetim.dll
 /Users/omer/Documents/GitHub/web-programlama-proje/bin/Debug/net10.0/Npgsql.dll
 /Users/omer/Documents/GitHub/web-programlama-proje/bin/Debug/net10.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll
-/Users/omer/Documents/GitHub/web-programlama-proje/obj/Debug/net10.0/compressed/642dzvxwow-{0}-7xpu5xvyw8-7xpu5xvyw8.gz
+/Users/omer/Documents/GitHub/web-programlama-proje/obj/Debug/net10.0/compressed/642dzvxwow-{0}-o99hsnr1c3-o99hsnr1c3.gz

@@ -143,6 +143,12 @@ public class RandevuController : Controller
             return View(randevu);
         }
 
+        // PostgreSQL için DateTime UTC olmalı
+        if (randevu.RandevuTarihi.Kind != DateTimeKind.Utc)
+        {
+            randevu.RandevuTarihi = DateTime.SpecifyKind(randevu.RandevuTarihi, DateTimeKind.Utc);
+        }
+
         // Bitiş saatini hesapla
         randevu.BitisSaati = randevu.BaslangicSaati.Add(TimeSpan.FromMinutes(hizmet.Sure));
         randevu.ToplamUcret = hizmet.Ucret;
