@@ -86,13 +86,17 @@ else
     exit 1
 fi
 
-# Connection string kontrolü
+# Connection string otomatik ayarla
 echo ""
-echo "⚙️  Connection string kontrol ediliyor..."
-if grep -q "Host=localhost" appsettings.json; then
-    echo -e "${GREEN}✓ Connection string ayarlı${NC}"
+echo "⚙️  Connection string ayarlanıyor..."
+CURRENT_USER=$(whoami)
+# macOS'ta genellikle şifre gerektirmez
+sed -i.bak "s/Username=.*/Username=$CURRENT_USER/" appsettings.json 2>/dev/null || \
+sed -i '' "s/Username=.*/Username=$CURRENT_USER/" appsettings.json 2>/dev/null
+if [ $? -eq 0 ]; then
+    echo -e "${GREEN}✓ Connection string otomatik ayarlandı (Username: $CURRENT_USER)${NC}"
 else
-    echo -e "${YELLOW}⚠ Connection string'i kontrol edin: appsettings.json${NC}"
+    echo -e "${YELLOW}⚠ Connection string'i manuel kontrol edin: appsettings.json${NC}"
 fi
 
 echo ""

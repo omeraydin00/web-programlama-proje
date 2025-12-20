@@ -76,13 +76,14 @@ if ($LASTEXITCODE -eq 0) {
     exit 1
 }
 
-# Connection string kontrolü
+# Connection string otomatik ayarla
 Write-Host ""
-Write-Host "⚙️  Connection string kontrol ediliyor..." -ForegroundColor Yellow
+Write-Host "⚙️  Connection string ayarlanıyor..." -ForegroundColor Yellow
 $appsettings = Get-Content appsettings.json -Raw
 if ($appsettings -match "Host=localhost") {
     Write-Host "✓ Connection string ayarlı" -ForegroundColor Green
-    Write-Host "⚠ Şifrenizi appsettings.json'da güncelleyin!" -ForegroundColor Yellow
+    Write-Host "⚠ Windows'ta PostgreSQL şifrenizi appsettings.json'da güncelleyin!" -ForegroundColor Yellow
+    Write-Host "   Password=your_password kısmını düzenleyin" -ForegroundColor Cyan
 } else {
     Write-Host "⚠ Connection string'i kontrol edin: appsettings.json" -ForegroundColor Yellow
 }
