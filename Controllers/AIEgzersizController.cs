@@ -35,39 +35,13 @@ public class AIEgzersizController : Controller
 
         try
         {
-            string? fotoYolu = null;
-
-            // Fotoğraf yükleme işlemi
-            if (model.Foto != null && model.Foto.Length > 0)
-            {
-                var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "fotolar");
-                if (!Directory.Exists(uploadsFolder))
-                {
-                    Directory.CreateDirectory(uploadsFolder);
-                }
-
-                var uniqueFileName = Guid.NewGuid().ToString() + "_" + model.Foto.FileName;
-                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await model.Foto.CopyToAsync(fileStream);
-                }
-
-                fotoYolu = $"/uploads/fotolar/{uniqueFileName}";
-                ViewBag.FotoYolu = fotoYolu;
-            }
-
-            var recommendation = await _ollamaService.GetExerciseRecommendationAsync(
+            var (recommendation, _) = await _ollamaService.GetExerciseRecommendationAsync(
                 model.VucutTipi,
                 model.Boy,
                 model.Kilo,
-                model.Hedef,
-                model.GorselSonucIste,
-                fotoYolu);
+                model.Hedef);
 
             ViewBag.Recommendation = recommendation;
-            ViewBag.GorselSonucIste = model.GorselSonucIste;
             return View("Index", model);
         }
         catch (Exception ex)

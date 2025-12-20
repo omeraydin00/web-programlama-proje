@@ -9,7 +9,7 @@
 
 <div class="row">
     <div class="col-md-6">
-        <form asp-action="GetRecommendation" method="post" enctype="multipart/form-data">
+        <form asp-action="GetRecommendation" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="mb-3">
@@ -43,20 +43,6 @@
             </div>
 
             <div class="mb-3">
-                <label asp-for="Foto" class="form-label">Fotoğraf (Opsiyonel)</label>
-                <input asp-for="Foto" type="file" class="form-control" accept="image/*" />
-                <small class="form-text text-muted">Vücut fotoğrafınızı yükleyebilirsiniz (JPG, PNG)</small>
-                <span asp-validation-for="Foto" class="text-danger"></span>
-            </div>
-
-            <div class="mb-3 form-check">
-                <input asp-for="GorselSonucIste" class="form-check-input" type="checkbox" />
-                <label asp-for="GorselSonucIste" class="form-check-label">
-                    Egzersiz sonrası nasıl görüneceğimi göster
-                </label>
-            </div>
-
-            <div class="mb-3">
                 <button type="submit" class="btn btn-primary">
                     <i class="bi bi-robot me-2"></i>AI Önerisi Al
                 </button>
@@ -74,23 +60,7 @@
                     </h5>
                 </div>
                 <div class="card-body">
-                    @if (ViewBag.FotoYolu != null)
-                    {
-                        <div class="mb-3 text-center">
-                            <img src="@ViewBag.FotoYolu" alt="Yüklenen Fotoğraf" class="img-fluid rounded"
-                                style="max-height: 300px;" />
-                            <p class="text-muted mt-2"><small>Yüklenen fotoğraf</small></p>
-                        </div>
-                    }
                     <div class="whitespace-pre-line">@ViewBag.Recommendation</div>
-                    @if (ViewBag.GorselSonucIste == true)
-                    {
-                        <div class="alert alert-info mt-3">
-                            <i class="bi bi-info-circle me-2"></i>
-                            <strong>Görsel Sonuç:</strong> AI, egzersiz programını takip ettikten sonra nasıl görüneceğinizi
-                            yukarıdaki öneride açıklamıştır.
-                        </div>
-                    }
                 </div>
             </div>
         }
@@ -101,8 +71,7 @@
                 <p>Yapay zeka, girdiğiniz bilgilere göre size özel bir egzersiz programı önerir:</p>
                 <ul>
                     <li>Vücut tipi, boy, kilo ve hedeflerinize göre kişiselleştirilmiş öneriler</li>
-                    <li>İsterseniz fotoğraf yükleyerek daha detaylı analiz</li>
-                    <li>Egzersiz sonrası nasıl görüneceğinizi öğrenme seçeneği</li>
+                    <li>Haftalık egzersiz planı, set/tekrar sayıları ve beslenme önerileri</li>
                 </ul>
             </div>
         }
