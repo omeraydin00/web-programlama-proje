@@ -1,47 +1,29 @@
-# Spor Salonu Yönetim ve Randevu Sistemi
+# Gym Management and Booking System
 
-Web Programlama dersi için geliştirilen spor salonu yönetim ve randevu sistemi projesi.
+A web app for a chain of gyms: its branches, trainers and services, and the members who book sessions with them.
 
-## Kurulum
+ASP.NET Core MVC (.NET 8) · Entity Framework Core · PostgreSQL · Bootstrap 5 · jQuery · Ollama
 
-**macOS/Linux:**
+Members sign up, pick a branch, a service and a trainer, and book a time. A booking is checked against the trainer's working hours and existing appointments, so two sessions can never overlap, and it waits for an admin to approve it. Admins manage branches, trainers with their availability, services and all bookings from their own panel; members only see their own.
+
+There is also an exercise page: a member enters their body type, height, weight and goal, and a model running locally through Ollama suggests a workout plan.
+
+Trainers and appointments are also available through a small REST API; appointments can be filtered by trainer, date range and status.
+
+## Running it
+
+You need the .NET 8 SDK and PostgreSQL. The setup scripts check for both (on macOS `setup.sh` installs them with Homebrew if they are missing) and create the database.
+
 ```bash
-chmod +x setup.sh && ./setup.sh
-```
+git clone https://github.com/omeraydin00/web-programlama-proje.git
+cd web-programlama-proje
 
-**Windows (PowerShell):**
-```powershell
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser; .\setup.ps1
-```
+./setup.sh          # macOS and Linux
+# .\setup.ps1       # Windows PowerShell
 
-**Projeyi Çalıştırma:**
-```bash
 dotnet run
 ```
 
-Tarayıcıda açın: **http://localhost:5001**
+Then open http://localhost:5001. Set your own database user in `appsettings.json` if it differs from the default. An admin account and sample data are created on the first run by `Data/DbInitializer.cs`. For exercise suggestions, install [Ollama](https://ollama.com) and run `ollama pull llama3.2`.
 
-## Admin Girişi
-
-* Email: `G221210370@sakarya.edu.tr`
-* Şifre: `sau`
-
-## Özellikler
-
-* ✅ CRUD İşlemleri (SporSalonu, Antrenor, Hizmet, Randevu)
-* ✅ REST API (LINQ filtreleme ile)
-* ✅ Yapay Zeka Entegrasyonu (Ollama)
-* ✅ Admin Paneli
-* ✅ Rol Bazlı Yetkilendirme (Admin, Üye)
-* ✅ Randevu Sistemi (Çakışma kontrolü, Onay mekanizması)
-* ✅ Data Validation (Client + Server)
-* ✅ Bootstrap 5, jQuery
-
-## Teknolojiler
-
-* ASP.NET Core MVC (.NET 8.0)
-* PostgreSQL
-* Entity Framework Core
-* Bootstrap 5
-* jQuery
-* Ollama (AI)
+Made for the Web Programming course at Sakarya University.
