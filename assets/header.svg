@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="260" viewBox="0 0 1200 260" role="img" aria-label="Gym Management: Branches, trainers and bookings for a gym chain.">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0D1117"/>
+      <stop offset="1" stop-color="#161B22"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.78" cy="0.5" r="0.42">
+      <stop offset="0" stop-color="#1F6FEB" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#1F6FEB" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#58A6FF"/>
+      <stop offset="1" stop-color="#BC8CFF"/>
+    </linearGradient>
+    <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.2" fill="#8B949E" opacity="0.18"/>
+    </pattern>
+    <clipPath id="frame"><rect width="1200" height="260" rx="16"/></clipPath>
+    <style>
+      .mono  { font: 500 15px 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace; fill: #8B949E; }
+      .name  { font: 700 48px 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif; fill: #F0F6FC; letter-spacing: -1px; }
+      .meta  { font: 400 18px 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif; fill: #8B949E; }
+      .stack { font: 500 15px 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace; fill: url(#accent); }
+      .label { font: 600 14px 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif; fill: #C9D1D9; }
+      .small { font: 600 12px 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace; fill: #8B949E; }
+      .hub   { font: 700 13px 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace; fill: #F0F6FC; letter-spacing: 1px; }
+      .flow { stroke-dasharray: 6 14; animation: dash 1.2s linear infinite; opacity: 0.55; }
+      @keyframes dash { to { stroke-dashoffset: -40; } }
+      .in { animation: in 0.8s ease-out backwards; }
+      .i1 { animation-delay: 0.05s; } .i2 { animation-delay: 0.2s; } .i3 { animation-delay: 0.35s; } .i4 { animation-delay: 0.5s; }
+      @keyframes in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+      
+    </style>
+  </defs>
+
+  <g clip-path="url(#frame)">
+    <rect width="1200" height="260" fill="url(#bg)"/>
+    <rect width="1200" height="260" fill="url(#dots)"/>
+    <rect width="1200" height="260" fill="url(#glow)"/>
+    <rect x="0.75" y="0.75" width="1198.5" height="258.5" rx="15.5" fill="none" stroke="#30363D" stroke-width="1.5"/>
+
+    <text x="64" y="70" class="mono in i1">~/omeraydin00/web-programlama-proje</text>
+    <text x="62" y="130" class="name in i2">Gym Management</text>
+    <text x="64" y="172" class="meta in i3">Branches, trainers and bookings for a gym chain.</text>
+    <text x="64" y="212" class="stack in i4">ASP.NET Core MVC · PostgreSQL</text>
+
+<text x="821.0" y="54" text-anchor="middle" class="small">Mon</text><text x="891.0" y="54" text-anchor="middle" class="small">Tue</text><text x="961.0" y="54" text-anchor="middle" class="small">Wed</text><text x="1031.0" y="54" text-anchor="middle" class="small">Thu</text><text x="1101.0" y="54" text-anchor="middle" class="small">Fri</text><rect x="790" y="68" width="62" height="32" rx="7" fill="#161B22" stroke="#30363D" stroke-width="1.5"></rect><rect x="860" y="68" width="62" height="32" rx="7" fill="#161B22" stroke="#30363D" stroke-width="1.5"></rect><rect x="930" y="68" width="62" height="32" rx="7" fill="#161B22" stroke="#30363D" stroke-width="1.5"><animate attributeName="fill" values="#161B22;#161B22;#132F55;#132F55;#161B22;#161B22" keyTimes="0;0.14;0.17;0.92;0.97;1" dur="8s" repeatCount="indefinite"/><animate attributeName="stroke" values="#30363D;#30363D;#58A6FF;#58A6FF;#30363D;#30363D" keyTimes="0;0.14;0.17;0.92;0.97;1" dur="8s" repeatCount="indefinite"/></rect><rect x="1000" y="68" width="62" height="32" rx="7" fill="#161B22" stroke="#30363D" stroke-width="1.5"></rect><rect x="1070" y="68" width="62" height="32" rx="7" fill="#161B22" stroke="#30363D" stroke-width="1.5"><animate attributeName="fill" values="#161B22;#161B22;#132F55;#132F55;#161B22;#161B22" keyTimes="0;0.62;0.65;0.92;0.97;1" dur="8s" repeatCount="indefinite"/><animate attributeName="stroke" values="#30363D;#30363D;#58A6FF;#58A6FF;#30363D;#30363D" keyTimes="0;0.62;0.65;0.92;0.97;1" dur="8s" repeatCount="indefinite"/></rect><rect x="790" y="108" width="62" height="32" rx="7" fill="#161B22" stroke="#30363D" stroke-width="1.5"><animate attributeName="fill" values="#161B22;#161B22;#132F55;#132F55;#161B22;#161B22" keyTimes="0;0.06;0.09;0.92;0.97;1" dur="8s" repeatCount="indefinite"/><animate attributeName="stroke" values="#30363D;#30363D;#58A6FF;#58A6FF;#30363D;#30363D" keyTimes="0;0.06;0.09;0.92;0.97;1" dur="8s" repeatCount="indefinite"/></rect><rect x="860" y="108" width="62" height="32" rx="7" fill="#161B22" stroke="#30363D" stroke-width="1.5"></rect><rect x="930" y="108" width="62" height="32" rx="7" fill="#161B22" stroke="#30363D" stroke-width="1.5"></rect><rect x="1000" y="108" width="62" height="32" rx="7" fill="#161B22" stroke="#30363D" stroke-width="1.5"><animate attributeName="fill" values="#161B22;#161B22;#132F55;#132F55;#161B22;#161B22" keyTimes="0;0.30;0.33;0.92;0.97;1" dur="8s" repeatCount="indefinite"/><animate attributeName="stroke" values="#30363D;#30363D;#58A6FF;#58A6FF;#30363D;#30363D" keyTimes="0;0.30;0.33;0.92;0.97;1" dur="8s" repeatCount="indefinite"/></rect><rect x="1070" y="108" width="62" height="32" rx="7" fill="#161B22" stroke="#30363D" stroke-width="1.5"></rect><rect x="790" y="148" width="62" height="32" rx="7" fill="#161B22" stroke="#30363D" stroke-width="1.5"></rect><rect x="860" y="148" width="62" height="32" rx="7" fill="#161B22" stroke="#30363D" stroke-width="1.5"><animate attributeName="fill" values="#161B22;#161B22;#132F55;#132F55;#161B22;#161B22" keyTimes="0;0.22;0.25;0.92;0.97;1" dur="8s" repeatCount="indefinite"/><animate attributeName="stroke" values="#30363D;#30363D;#58A6FF;#58A6FF;#30363D;#30363D" keyTimes="0;0.22;0.25;0.92;0.97;1" dur="8s" repeatCount="indefinite"/></rect><rect x="930" y="148" width="62" height="32" rx="7" fill="#161B22" stroke="#30363D" stroke-width="1.5"><animate attributeName="fill" values="#161B22;#161B22;#132F55;#132F55;#161B22;#161B22" keyTimes="0;0.54;0.57;0.92;0.97;1" dur="8s" repeatCount="indefinite"/><animate attributeName="stroke" values="#30363D;#30363D;#58A6FF;#58A6FF;#30363D;#30363D" keyTimes="0;0.54;0.57;0.92;0.97;1" dur="8s" repeatCount="indefinite"/></rect><rect x="1000" y="148" width="62" height="32" rx="7" fill="#161B22" stroke="#30363D" stroke-width="1.5"></rect><rect x="1070" y="148" width="62" height="32" rx="7" fill="#161B22" stroke="#30363D" stroke-width="1.5"></rect><rect x="790" y="188" width="62" height="32" rx="7" fill="#161B22" stroke="#30363D" stroke-width="1.5"><animate attributeName="fill" values="#161B22;#161B22;#132F55;#132F55;#161B22;#161B22" keyTimes="0;0.46;0.49;0.92;0.97;1" dur="8s" repeatCount="indefinite"/><animate attributeName="stroke" values="#30363D;#30363D;#58A6FF;#58A6FF;#30363D;#30363D" keyTimes="0;0.46;0.49;0.92;0.97;1" dur="8s" repeatCount="indefinite"/></rect><rect x="860" y="188" width="62" height="32" rx="7" fill="#161B22" stroke="#30363D" stroke-width="1.5"></rect><rect x="930" y="188" width="62" height="32" rx="7" fill="#161B22" stroke="#30363D" stroke-width="1.5"></rect><rect x="1000" y="188" width="62" height="32" rx="7" fill="#161B22" stroke="#30363D" stroke-width="1.5"></rect><rect x="1070" y="188" width="62" height="32" rx="7" fill="#161B22" stroke="#30363D" stroke-width="1.5"><animate attributeName="fill" values="#161B22;#161B22;#132F55;#132F55;#161B22;#161B22" keyTimes="0;0.38;0.41;0.92;0.97;1" dur="8s" repeatCount="indefinite"/><animate attributeName="stroke" values="#30363D;#30363D;#58A6FF;#58A6FF;#30363D;#30363D" keyTimes="0;0.38;0.41;0.92;0.97;1" dur="8s" repeatCount="indefinite"/></rect>
+  </g>
+</svg>
