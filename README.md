@@ -1,4 +1,6 @@
-# Gym Management and Booking System
+<p align="center">
+  <img src="./assets/header.svg" alt="Gym Management and Booking System" width="100%" />
+</p>
 
 A web app for a chain of gyms: its branches, trainers and services, and the members who book sessions with them.
 
